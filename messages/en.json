@@ -1,0 +1,18 @@
+{
+  "home": {
+    "wordmark": "The Boat House",
+    "tagline": "A family table by the sea — Cala San Vicente, since 2016",
+    "cta": "Reserve a table",
+    "scrollHint": "Scroll"
+  },
+  "nav": {
+    "menu": "Menu",
+    "about": "About",
+    "gallery": "Gallery",
+    "contact": "Contact"
+  },
+  "scaffold": {
+    "stepLabel": "Step 2 — Project scaffold",
+    "probeLabel": "ScrollTrigger probe — fades in at 75% viewport"
+  }
+}

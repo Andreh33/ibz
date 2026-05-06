@@ -1,0 +1,52 @@
+{
+  "_meta": {
+    "source": "Parsed from _source/html/menu-{en,es,de,fr,nl,it}.html via tools/parse-menu.mjs.",
+    "status": "Seed of canonical signature dishes from CLAUDE.md §12 — full menu parser pending refinement in step 10 (/menu page)."
+  },
+  "sections": [
+    { "id": "tapas", "titleI18n": { "en": "Tapas", "es": "Tapas", "de": "Tapas", "fr": "Tapas", "nl": "Tapas", "it": "Tapas" }, "order": 10 },
+    { "id": "starters", "titleI18n": { "en": "Starters", "es": "Entrantes", "de": "Vorspeisen", "fr": "Entrées", "nl": "Voorgerechten", "it": "Antipasti" }, "order": 20 },
+    { "id": "salads", "titleI18n": { "en": "Salads", "es": "Ensaladas", "de": "Salate", "fr": "Salades", "nl": "Salades", "it": "Insalate" }, "order": 30 },
+    { "id": "mains", "titleI18n": { "en": "Mains", "es": "Principales", "de": "Hauptgerichte", "fr": "Plats", "nl": "Hoofdgerechten", "it": "Secondi" }, "order": 40 },
+    { "id": "desserts", "titleI18n": { "en": "Desserts", "es": "Postres", "de": "Desserts", "fr": "Desserts", "nl": "Desserts", "it": "Dolci" }, "order": 50 }
+  ],
+  "items": [
+    {
+      "section": "mains",
+      "titleI18n": { "en": "Paella melosa (seafood & fish)", "es": "Paella melosa (mariscos y pescado)", "de": "Paella melosa (Meeresfrüchte & Fisch)", "fr": "Paella melosa (fruits de mer & poisson)", "nl": "Paella melosa (zeevruchten & vis)", "it": "Paella melosa (frutti di mare e pesce)" },
+      "price": 29.5,
+      "priceLabel": "/ person, min 2"
+    },
+    {
+      "section": "mains",
+      "titleI18n": { "en": "50-day dry-aged Friesian beef loin", "es": "Lomo de vaca frisona madurado 50 días", "de": "50 Tage gereiftes Friesisches Rinderfilet", "fr": "Aloyau de vache frisonne maturé 50 jours", "nl": "50 dagen gerijpte Friese runderlende", "it": "Lombo di manzo frisone frollato 50 giorni" },
+      "price": 46.5
+    },
+    {
+      "section": "mains",
+      "titleI18n": { "en": "Frisian Tomahawk steak (Galicia)", "es": "Tomahawk frisón (Galicia)", "de": "Friesisches Tomahawk-Steak (Galicien)", "fr": "Côte de bœuf Tomahawk frisonne (Galice)", "nl": "Friese Tomahawk steak (Galicië)", "it": "Bistecca Tomahawk frisona (Galizia)" },
+      "price": 90.0,
+      "priceLabel": "for 1 kg"
+    },
+    {
+      "section": "mains",
+      "titleI18n": { "en": "Slow-cooked lamb shoulder", "es": "Paletilla de cordero a baja temperatura", "de": "Langsam gegarte Lammschulter", "fr": "Épaule d'agneau confite", "nl": "Langzaam gegaarde lamsschouder", "it": "Spalla d'agnello a bassa temperatura" },
+      "price": 74.5,
+      "priceLabel": "for 1.2 kg"
+    },
+    {
+      "section": "mains",
+      "titleI18n": { "en": "Wagyu Boat House burger", "es": "Hamburguesa Wagyu Boat House", "de": "Wagyu Boat House Burger", "fr": "Burger Wagyu Boat House", "nl": "Wagyu Boat House burger", "it": "Burger Wagyu Boat House" },
+      "price": 24.0
+    },
+    {
+      "section": "mains",
+      "titleI18n": { "en": "Thai fish & seafood curry", "es": "Curry tailandés de pescado y mariscos", "de": "Thai-Curry mit Fisch und Meeresfrüchten", "fr": "Curry thaï poisson et fruits de mer", "nl": "Thaise curry met vis en zeevruchten", "it": "Curry thai di pesce e frutti di mare" }
+    },
+    {
+      "section": "mains",
+      "titleI18n": { "en": "Vegan yellow curry", "es": "Curry amarillo vegano", "de": "Veganes gelbes Curry", "fr": "Curry jaune vegan", "nl": "Vegan gele curry", "it": "Curry giallo vegano" },
+      "isVegan": true
+    }
+  ]
+}

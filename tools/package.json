@@ -1,0 +1,23 @@
+{
+  "name": "ibizarestaurante-tools",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Asset pipeline for The Boat House Ibiza site. Run from this folder, never from the repo root.",
+  "type": "module",
+  "scripts": {
+    "process-images": "node process-images.mjs",
+    "compress-glb": "node compress-glb.mjs",
+    "qa-boeing": "node qa/preview-boeing.mjs",
+    "qa-tortuga": "node qa/preview-tortuga.mjs",
+    "qa": "npm run qa-boeing && npm run qa-tortuga",
+    "all": "npm run process-images && npm run compress-glb"
+  },
+  "devDependencies": {
+    "@gltf-transform/cli": "^4.3.0",
+    "@gltf-transform/core": "^4.3.0",
+    "cheerio": "^1.0.0",
+    "puppeteer": "^24.43.0",
+    "sharp": "^0.34.5",
+    "three": "^0.184.0"
+  }
+}

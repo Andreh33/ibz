@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>html,body{margin:0;background:#f5f0e6}canvas{display:block}</style>
+<script type="importmap">
+{ "imports": {
+  "three": "/tools/node_modules/three/build/three.module.js",
+  "three/addons/": "/tools/node_modules/three/examples/jsm/"
+}}
+</script>
+</head>
+<body>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+
+const params = new URLSearchParams(location.search);
+const url = params.get('url');
+const W = parseInt(params.get('w') ?? '800', 10);
+const H = parseInt(params.get('h') ?? '500', 10);
+const wantAnim = params.get('anim') === '1';
+const cam = params.get('cam') ?? 'lateral34';
+const unlit = params.get('unlit') === '1';
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, alpha: false });
+renderer.setSize(W, H);
+renderer.setPixelRatio(1);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.setClearColor(0xf5f0e6, 1);
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(35, W / H, 0.01, 5000);
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+const key = new THREE.DirectionalLight(0xffffff, 1.4);
+key.position.set(5, 8, 4); scene.add(key);
+const fill = new THREE.DirectionalLight(0xbcd4e6, 0.6);
+fill.position.set(-4, 2, -3); scene.add(fill);
+
+const draco = new DRACOLoader();
+draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
+const loader = new GLTFLoader();
+loader.setDRACOLoader(draco);
+
+window.__state = { ready: false, error: null, hasAnim: false, duration: 0, animName: null, materialCount: 0, textureCount: 0 };
+let mixer = null, clip = null;
+
+loader.load(url, (gltf) => {
+  const obj = gltf.scene;
+  scene.add(obj);
+
+  let mats = new Set(), texs = new Set();
+  obj.traverse((n) => {
+    if (n.material) {
+      const arr = Array.isArray(n.material) ? n.material : [n.material];
+      arr.forEach((m) => {
+        mats.add(m);
+        for (const k of ['map','normalMap','specularMap','specularGlossinessMap','emissiveMap','roughnessMap','metalnessMap','aoMap']) {
+          if (m[k]) texs.add(m[k]);
+        }
+      });
+    }
+  });
+  if (unlit) {
+    obj.traverse((n) => {
+      if (n.isMesh && n.material) {
+        const oldMats = Array.isArray(n.material) ? n.material : [n.material];
+        const newMats = oldMats.map((m) => {
+          const tex = m.map ?? m.diffuseTexture ?? null;
+          return new THREE.MeshBasicMaterial({ map: tex, side: THREE.DoubleSide, color: 0xffffff });
+        });
+        n.material = Array.isArray(n.material) ? newMats : newMats[0];
+      }
+    });
+  }
+  window.__state.materialCount = mats.size;
+  window.__state.textureCount = texs.size;
+
+  const box = new THREE.Box3().setFromObject(obj);
+  const size = box.getSize(new THREE.Vector3()).length();
+  const center = box.getCenter(new THREE.Vector3());
+  obj.position.sub(center);
+  const dist = size * 1.05;
+  if (cam === 'side') {
+    camera.position.set(dist * 0.95, 0, 0);
+  } else if (cam === 'side-close') {
+    camera.position.set(dist * 0.55, dist * 0.05, 0);
+  } else if (cam === 'front') {
+    camera.position.set(0, 0, dist * 0.95);
+  } else {
+    camera.position.set(dist * 0.7, dist * 0.35, dist * 0.7);
+  }
+  camera.lookAt(0, 0, 0);
+
+  if (wantAnim && gltf.animations.length > 0) {
+    mixer = new THREE.AnimationMixer(obj);
+    clip = gltf.animations[0];
+    mixer.clipAction(clip).play();
+    window.__state.hasAnim = true;
+    window.__state.duration = clip.duration;
+    window.__state.animName = clip.name;
+  }
+
+  renderer.render(scene, camera);
+  window.__state.ready = true;
+}, undefined, (err) => {
+  window.__state.error = String(err?.message ?? err);
+  window.__state.ready = true;
+});
+
+window.__renderAtT = (tNorm) => {
+  if (!mixer || !clip) return false;
+  mixer.setTime(tNorm * clip.duration);
+  renderer.render(scene, camera);
+  return true;
+};
+</script>
+</body>
+</html>

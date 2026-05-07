@@ -3,12 +3,15 @@ import { getTranslations } from 'next-intl/server';
 import { DisintegrationTransition } from '@/components/canvas/DisintegrationTransition';
 import { IbizaSilhouette } from '@/components/canvas/IbizaSilhouette';
 import { CausticsOverlay } from '@/components/canvas/CausticsOverlay';
+import { SourcingMap } from '@/components/canvas/SourcingMap';
 import { Act1Trigger } from '@/components/layout/Act1Trigger';
 import { Act4Banner } from '@/components/layout/Act4Banner';
 import { Act4Trigger } from '@/components/layout/Act4Trigger';
 import { Act5Header } from '@/components/layout/Act5Header';
 import { Act5Trigger } from '@/components/layout/Act5Trigger';
+import { DinghySvg } from '@/components/layout/DinghySvg';
 import { DishesTrack } from '@/components/layout/DishesTrack';
+import { ReviewsCarousel } from '@/components/layout/ReviewsCarousel';
 import { ScrollHint } from '@/components/layout/ScrollHint';
 import { WaterCrossFlash } from '@/components/layout/WaterCrossFlash';
 import { WordmarkReveal } from '@/components/layout/WordmarkReveal';
@@ -58,12 +61,12 @@ export default async function HomePage({ params }: Props) {
                 {t('home.tagline')}
               </p>
               <div className="mt-10 flex justify-center">
-                <button
-                  type="button"
-                  className="rounded-full border border-ivory/30 bg-ivory/95 px-8 py-3 font-sans text-sm uppercase tracking-widest text-deep shadow-[0_8px_24px_rgba(4,16,29,0.45)] transition hover:bg-ivory"
+                <Link
+                  href={`/${locale}/contact`}
+                  className="rounded-full border border-ivory/30 bg-ivory/95 px-8 py-3 font-sans text-sm uppercase tracking-widest text-deep shadow-[0_8px_24px_rgba(4,16,29,0.45)] transition hover:bg-ivory hover:scale-105"
                 >
                   {t('home.cta')}
-                </button>
+                </Link>
               </div>
             </WordmarkReveal>
           </DisintegrationTransition>
@@ -245,8 +248,22 @@ export default async function HomePage({ params }: Props) {
         <DishesTrack />
       </Act5Trigger>
 
-      {/* === ACT 6 — On the water (catering / boat delivery) === */}
-      <section className="relative px-6 py-32 sm:py-40">
+      {/* === ACT 5b — Sourcing map (per CLAUDE.md §3 Act 5) === */}
+      <SourcingMap
+        eyebrow={t('act5b.eyebrow')}
+        headline={t('act5b.headline')}
+        intro={t('act5b.intro')}
+        legend={{
+          partner: t('act5b.legendPartner'),
+          estate: t('act5b.legendEstate'),
+        }}
+      />
+
+      {/* === ACT 6 — On the water (catering + dinghy + bubbles) === */}
+      <section className="relative overflow-hidden px-6 py-32 sm:py-40">
+        {/* Drifting dinghy SVG — sails L→R as user scrolls past, gold trail. */}
+        <DinghySvg />
+
         <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 md:grid-cols-12 md:gap-20">
           <div className="md:col-span-6">
             <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/80">
@@ -261,7 +278,7 @@ export default async function HomePage({ params }: Props) {
             <div className="mt-10 flex flex-wrap gap-4">
               <Link
                 href={`/${locale}/contact`}
-                className="rounded-full bg-ivory/95 px-6 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-deep transition hover:bg-gold hover:text-deep"
+                className="rounded-full bg-ivory/95 px-6 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-deep transition hover:scale-105 hover:bg-gold"
               >
                 {t('act6.ctaCatering')}
               </Link>
@@ -272,6 +289,23 @@ export default async function HomePage({ params }: Props) {
                 {t('act6.ctaTable')}
               </Link>
             </div>
+
+            {/* Two-column micro-grid: the dual offering broken into clear
+                editorial chunks instead of a single paragraph. */}
+            <dl className="mt-12 grid grid-cols-2 gap-x-8 gap-y-2 border-t border-ivory/15 pt-8">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.3em] text-ivory/65">
+                {t('act6.col1Title')}
+              </dt>
+              <dt className="font-mono text-[10px] uppercase tracking-[0.3em] text-ivory/65">
+                {t('act6.col2Title')}
+              </dt>
+              <dd className="font-sans text-sm leading-relaxed text-ivory/90">
+                {t('act6.col1Body')}
+              </dd>
+              <dd className="font-sans text-sm leading-relaxed text-ivory/90">
+                {t('act6.col2Body')}
+              </dd>
+            </dl>
           </div>
           <div className="md:col-span-6">
             <div className="relative aspect-[4/5] overflow-hidden rounded-sm shadow-[0_30px_80px_rgba(4,16,29,0.55)]">
@@ -286,36 +320,74 @@ export default async function HomePage({ params }: Props) {
         </div>
       </section>
 
-      {/* === ACT 7 — Where every story settles (close + CTA) === */}
+      {/* === ACT 7a — Press / reviews fade-through === */}
       <section className="relative px-6 py-32 sm:py-40">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/80">
-            {t('act7.eyebrow')}
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/70">
+            {t('reviews.eyebrow')}
           </p>
-          <h2 className="mt-6 font-display text-[clamp(40px,6vw,84px)] font-light leading-[1.05] tracking-[-0.02em] text-ivory drop-shadow-[0_2px_24px_rgba(4,16,29,0.5)]">
-            {t('act7.headline')}
-          </h2>
-          <p className="mx-auto mt-8 max-w-[48ch] font-sans text-base leading-relaxed text-ivory/85 drop-shadow-[0_2px_18px_rgba(4,16,29,0.55)]">
-            {t('act7.body')}
-          </p>
-          <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/70">
-            {t('act7.address')}
-          </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Link
-              href={`/${locale}/contact`}
-              className="rounded-full bg-ivory/95 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-deep transition hover:bg-gold hover:text-deep"
-            >
-              {t('act7.ctaReserve')}
-            </Link>
-            <a
-              href="https://maps.google.com/?q=Cala+San+Vicente+Ibiza+The+Boat+House"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full border border-ivory/40 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-ivory transition hover:bg-ivory/10"
-            >
-              {t('act7.ctaDirections')}
-            </a>
+          <ReviewsCarousel
+            reviews={[
+              { quote: t('reviews.r1.body'), source: t('reviews.r1.source') },
+              { quote: t('reviews.r2.body'), source: t('reviews.r2.source') },
+              { quote: t('reviews.r3.body'), source: t('reviews.r3.source') },
+            ]}
+          />
+        </div>
+      </section>
+
+      {/* === ACT 7 — Where every story settles (close + CTA + final
+          editorial card with photo) === */}
+      <section className="relative px-6 py-24 sm:py-32">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 md:grid-cols-12 md:gap-20">
+          <div className="md:col-span-7 md:order-2">
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/80">
+              {t('act7.eyebrow')}
+            </p>
+            <h2 className="mt-6 font-display text-[clamp(40px,5.5vw,76px)] font-light leading-[1.05] tracking-[-0.02em] text-ivory drop-shadow-[0_2px_24px_rgba(4,16,29,0.5)]">
+              {t('act7.headline')}
+            </h2>
+            <p className="mt-8 max-w-[48ch] font-sans text-base leading-relaxed text-ivory/85 drop-shadow-[0_2px_18px_rgba(4,16,29,0.55)]">
+              {t('act7.body')}
+            </p>
+            <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/70">
+              {t('act7.address')}
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link
+                href={`/${locale}/contact`}
+                className="rounded-full bg-ivory/95 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-deep transition hover:scale-105 hover:bg-gold"
+              >
+                {t('act7.ctaReserve')}
+              </Link>
+              <a
+                href="https://maps.google.com/?q=Cala+San+Vicente+Ibiza+The+Boat+House"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-ivory/40 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-ivory transition hover:bg-ivory/10"
+              >
+                {t('act7.ctaDirections')}
+              </a>
+            </div>
+
+            {/* Tertiary nav into the editorial subpages so the descent
+                doesn't dead-end at the footer. */}
+            <ul className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-ivory/15 pt-8 font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/85">
+              <li><Link className="transition-colors hover:text-gold" href={`/${locale}/menu`}>→ {t('nav.menu')}</Link></li>
+              <li><Link className="transition-colors hover:text-gold" href={`/${locale}/about`}>→ {t('nav.about')}</Link></li>
+              <li><Link className="transition-colors hover:text-gold" href={`/${locale}/gallery`}>→ {t('nav.gallery')}</Link></li>
+              <li><Link className="transition-colors hover:text-gold" href={`/${locale}/contact`}>→ {t('nav.contact')}</Link></li>
+            </ul>
+          </div>
+          <div className="md:col-span-5 md:order-1">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-sm shadow-[0_30px_80px_rgba(4,16,29,0.55)]">
+              <img
+                src="/images/5K3A0609-scaled-1600.avif"
+                alt=""
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
       </section>

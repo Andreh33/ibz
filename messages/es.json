@@ -16,9 +16,21 @@
     "headline": "40",
     "subtitle": "de aventura familiar holandesa en una isla española",
     "timeline": {
-      "t1985": { "year": "1985", "place": "Figueretes", "label": "Una furgoneta y un perro" },
-      "t2005": { "year": "2005", "place": "Cala San Vicente", "label": "On the Beach" },
-      "t2016": { "year": "2016", "place": "Cala San Vicente", "label": "The Boat House" }
+      "t1985": {
+        "year": "1985",
+        "place": "Figueretes",
+        "label": "Una furgoneta y un perro"
+      },
+      "t2005": {
+        "year": "2005",
+        "place": "Cala San Vicente",
+        "label": "On the Beach"
+      },
+      "t2016": {
+        "year": "2016",
+        "place": "Cala San Vicente",
+        "label": "The Boat House"
+      }
     },
     "quote": {
       "body": "Compartir tu comida y pasar tiempo con tus seres queridos mientras disfrutáis de las vistas de la playa y del mar — esa es nuestra idea del paraíso.",
@@ -47,12 +59,23 @@
     "headline": "Moderna, orgánica, hiperlocal",
     "intro": "Cinco platos firma del Mediterráneo y más allá, preparados con producto de nuestra finca km 0 y socios de confianza en España e Italia."
   },
+  "act5b": {
+    "eyebrow": "Origen",
+    "headline": "Cinco orígenes, una mesa",
+    "intro": "Nuestra despensa es un mapa silencioso del Mediterráneo — vacuno gallego, nuestra finca km 0 a cinco minutos de la cocina, mozzarella de búfala de una única quesería en Nápoles, mezze que viene desde Beirut y el pescado que nuestro patrón desembarca en la cala esa misma mañana.",
+    "legendPartner": "Socio desde hace cuarenta años",
+    "legendEstate": "Finca propia"
+  },
   "act6": {
     "eyebrow": "Sobre el agua",
     "headline": "Ancla tu barco — bajamos hasta la cala",
     "body": "Capitanes, navegad. Echad el ancla en Cala San Vicente, llamadnos por VHF o WhatsApp, y nuestro skiff os lleva la mesa. Comida, copas, paella para toda la tripulación — servido en cubierta o en la arena.",
     "ctaCatering": "Reservar catering",
-    "ctaTable": "Reservar mesa"
+    "ctaTable": "Reservar mesa",
+    "col1Title": "Reservar mesa",
+    "col1Body": "En el deck o bajo los pinos. Almuerzo desde las 12:30, cena desde las 19:00, última reserva a las 22:00.",
+    "col2Title": "Ancla tu barco",
+    "col2Body": "Fondea en Cala San Vicente, llámanos por VHF 09 o WhatsApp +34 971 334 273, nuestro skiff sale en quince minutos."
   },
   "act7": {
     "eyebrow": "Donde reposa cada historia",
@@ -61,6 +84,21 @@
     "address": "Calle del Caló 12, Cala San Vicente, Eivissa",
     "ctaReserve": "Reservar mesa",
     "ctaDirections": "Cómo llegar"
+  },
+  "reviews": {
+    "eyebrow": "Lo que dicen los huéspedes",
+    "r1": {
+      "body": "Un suelo de acuario bajo los pies, una vista de cala que se suaviza con el sol. La cocina estuvo a la altura — cada plato sabía al lugar.",
+      "source": "Condé Nast Traveller, 2024"
+    },
+    "r2": {
+      "body": "Llegamos en barco a comer. Dos horas después seguíamos en la mesa, nuestro patrón estaba en la barra, y nadie parecía querer marcharse.",
+      "source": "Pierre L., huésped, agosto 2025"
+    },
+    "r3": {
+      "body": "El Tomahawk frisón para dos es el chuletón más honesto que he comido en Ibiza. La salsa verde — pura cala, puro mar.",
+      "source": "Time Out Ibiza, 2024"
+    }
   },
   "menu": {
     "eyebrow": "La carta",

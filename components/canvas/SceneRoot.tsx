@@ -6,6 +6,7 @@ import { Suspense, useEffect, useRef, useState } from 'react';
 import { AnchorChain } from './AnchorChain';
 import { AtmosphericFog } from './AtmosphericFog';
 import { BackgroundPhotoPlane } from './BackgroundPhotoPlane';
+import { Bubbles } from './Bubbles';
 import { SceneLoader } from './SceneLoader';
 import { SkyEnvironment } from './SkyEnvironment';
 import { WaterPlane } from './WaterPlane';
@@ -61,6 +62,9 @@ export function SceneRoot() {
         </Suspense>
         <Suspense fallback={null}>
           <WaterPlane />
+        </Suspense>
+        <Suspense fallback={null}>
+          <Bubbles />
         </Suspense>
       </Canvas>
     </div>

@@ -59,12 +59,23 @@
     "headline": "Modern, biologisch, hyperlokal",
     "intro": "Fünf Signature-Gerichte vom Mittelmeer und darüber hinaus, zubereitet mit Produkten unseres Null-Kilometer-Hofs und vertrauenswürdiger Partner in Spanien und Italien."
   },
+  "act5b": {
+    "eyebrow": "Sourced",
+    "headline": "Five places, one table",
+    "intro": "Our pantry is a quiet map of the Mediterranean — Galician beef, our own zero-km farm five minutes from the kitchen, buffalo mozzarella from a single dairy outside Naples, mezze that travels from Beirut, and the catch our captain lands at the cove that morning.",
+    "legendPartner": "Partner of forty years",
+    "legendEstate": "Boat House estate"
+  },
   "act6": {
     "eyebrow": "On the water",
     "headline": "Anchor your boat — we deliver to the cove",
     "body": "Captains, sail in. Drop anchor at Cala San Vicente, message us with your VHF or WhatsApp, and our skiff brings the table to you. Lunch, drinks, paella for the whole crew — served on deck or in the sand.",
     "ctaCatering": "Reserve catering",
-    "ctaTable": "Reserve a table"
+    "ctaTable": "Reserve a table",
+    "col1Title": "Reserve a table",
+    "col1Body": "On the deck or under the pines. Lunch from 12:30, dinner from 19:00, last booking at 22:00.",
+    "col2Title": "Anchor your boat",
+    "col2Body": "Drop anchor at Cala San Vicente, ping us on VHF 09 or WhatsApp +34 971 334 273, our skiff comes out within fifteen minutes."
   },
   "act7": {
     "eyebrow": "Where every story settles",
@@ -73,6 +84,21 @@
     "address": "Calle del Calo 12, Cala San Vicente, Eivissa",
     "ctaReserve": "Reserve a table",
     "ctaDirections": "Get directions"
+  },
+  "reviews": {
+    "eyebrow": "What guests say",
+    "r1": {
+      "body": "An aquarium floor under your feet, a cove view that softens with the sun. The food kept up — every plate read as the place itself.",
+      "source": "Condé Nast Traveller, 2024"
+    },
+    "r2": {
+      "body": "We arrived by boat for lunch. Two hours later we were still at the table, our skipper was at the bar, and nobody seemed to want to leave.",
+      "source": "Pierre L., guest, August 2025"
+    },
+    "r3": {
+      "body": "The Friesian Tomahawk for two is the most honest steak I've eaten in Ibiza. The salsa verde — pure cove, pure sea.",
+      "source": "Time Out Ibiza, 2024"
+    }
   },
   "menu": {
     "eyebrow": "The menu",

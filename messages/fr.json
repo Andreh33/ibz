@@ -38,8 +38,9 @@
     "pinLabel": "Cala San Vicente"
   },
   "act4": {
-    "eyebrow": "Acte 4 (placeholder)",
-    "headline": "Franchir la surface"
+    "eyebrow": "Sous la surface",
+    "headline": "Là où les histoires se posent et la table attend",
+    "body": "Notre carte, notre cuisine, notre maison — vous êtes arrivés."
   },
   "scaffold": {
     "stepLabel": "Étape 2 — Squelette du projet",

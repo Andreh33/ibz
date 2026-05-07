@@ -14,12 +14,16 @@ import {
   TorusGeometry,
   Vector3,
 } from 'three';
+import { useDescentStore } from '@/lib/store/descent';
 
 const ANCHOR_URL = '/models/ancla.final.glb';
 useGLTF.preload(ANCHOR_URL);
 
 // Neutral near-black base — the HDRI sunset provides warmth via specular reflection.
 const METAL_BASE = new Color('#1a1a1a');
+// Underwater tint — once the camera has crossed the surface (Act 4), the
+// anchor + chain pick up a cool turquoise rim from the surrounding water.
+const METAL_UNDERWATER = new Color('#1a3540');
 
 // World-space target: anchor centered around (0, 0, 0), about 3 units tall
 const TARGET_HEIGHT = 3;
@@ -115,6 +119,13 @@ export function AnchorChain() {
     );
 
     const time = state.clock.elapsedTime;
+
+    // Underwater tint — drives the brand metal toward a cooler hue once the
+    // camera crosses the surface during Act 4. brandMat is shared by the
+    // anchor mesh and the instanced chain links, so a single color lerp
+    // recolours both consistently.
+    const a4 = useDescentStore.getState().act4Progress;
+    brandMat.color.copy(METAL_BASE).lerp(METAL_UNDERWATER, a4);
 
     for (let i = 0; i < linkCount; i++) {
       linkDummy.position.set(0, ringWorldY + i * LINK_SPACING, 0);

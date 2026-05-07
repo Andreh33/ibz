@@ -6,6 +6,7 @@ import { Suspense, useEffect, useRef, useState } from 'react';
 import { AnchorChain } from './AnchorChain';
 import { SceneLoader } from './SceneLoader';
 import { SkyEnvironment } from './SkyEnvironment';
+import { WaterPlane } from './WaterPlane';
 
 export function SceneRoot() {
   const [hidden, setHidden] = useState(false);
@@ -45,6 +46,9 @@ export function SceneRoot() {
         </Suspense>
         <Suspense fallback={null}>
           <AnchorChain />
+        </Suspense>
+        <Suspense fallback={null}>
+          <WaterPlane />
         </Suspense>
       </Canvas>
     </div>

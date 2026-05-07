@@ -62,3 +62,20 @@
 .cloud-drift {
   animation: cloud-drift 60s ease-in-out infinite;
 }
+
+/* God rays drift (Act 4) — slight horizontal oscillation so the static SVG
+   trapezoids don't read as a frozen poster. Each ray gets a different
+   animation-delay (negative) for natural-looking phase offsets. */
+@keyframes god-ray-drift {
+  0%, 100% { transform: translateX(0) skewX(0deg); }
+  50% { transform: translateX(8px) skewX(2deg); }
+}
+
+/* Cross-water flash (Act 4 mid-cross) — chromatic aberration + bloom
+   approximation done with two filter layers + a brief opacity pulse.
+   Triggered by toggling the `flash-active` class on the wrapper. */
+@keyframes water-flash {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  100% { opacity: 0; }
+}

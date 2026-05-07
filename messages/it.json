@@ -38,8 +38,9 @@
     "pinLabel": "Cala San Vicente"
   },
   "act4": {
-    "eyebrow": "Atto 4 (placeholder)",
-    "headline": "Attraversando la superficie"
+    "eyebrow": "Sotto la superficie",
+    "headline": "Dove le storie riposano e la tavola attende",
+    "body": "Il nostro menu, la nostra cucina, la nostra casa — siete arrivati."
   },
   "scaffold": {
     "stepLabel": "Passo 2 — Scaffold del progetto",

@@ -2,8 +2,13 @@ import { setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
 import { DisintegrationTransition } from '@/components/canvas/DisintegrationTransition';
 import { IbizaSilhouette } from '@/components/canvas/IbizaSilhouette';
+import { CausticsOverlay } from '@/components/canvas/CausticsOverlay';
+import { GodRaysCanvas } from '@/components/canvas/GodRaysCanvas';
 import { Act1Trigger } from '@/components/layout/Act1Trigger';
+import { Act4Banner } from '@/components/layout/Act4Banner';
+import { Act4Trigger } from '@/components/layout/Act4Trigger';
 import { ScrollHint } from '@/components/layout/ScrollHint';
+import { WaterCrossFlash } from '@/components/layout/WaterCrossFlash';
 import { WordmarkReveal } from '@/components/layout/WordmarkReveal';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -185,17 +190,33 @@ export default async function HomePage({ params }: Props) {
         </DisintegrationTransition>
       </section>
 
-      {/* === ACT 4 placeholder === */}
-      <section className="flex min-h-screen items-center justify-center px-6 text-center">
-        <div>
-          <p className="font-mono text-xs uppercase tracking-widest text-ivory/55 mb-4">
-            /{locale} &middot; {t('act4.eyebrow')}
+      {/* === ACT 4 — Breaking the surface === */}
+      {/* Pinned 1500px so the user has scroll runway for: above water (0–30%),
+          cross-water flash (30–50%), submerged with caustics + god rays
+          (50–100%). The Act4Banner inside fades in once a4 ≥ 0.5. The
+          fixed-position overlays (caustics, god rays, flash) live at the
+          page level so they're not bound to the pinned section's transform. */}
+      <Act4Trigger>
+        <Act4Banner>
+          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/95 drop-shadow-[0_2px_18px_rgba(4,16,29,0.55)]">
+            {t('act4.eyebrow')}
           </p>
-          <h2 className="font-display text-5xl font-light tracking-[-0.02em] text-ivory">
+          <h2 className="mt-6 max-w-[18ch] font-display text-[clamp(40px,5.5vw,76px)] font-light leading-[1.1] tracking-[-0.02em] text-ivory drop-shadow-[0_2px_24px_rgba(4,16,29,0.5)]">
             {t('act4.headline')}
           </h2>
-        </div>
-      </section>
+          <p className="mt-8 max-w-[36ch] font-sans text-[17px] leading-[1.7] text-ivory/95 drop-shadow-[0_2px_18px_rgba(4,16,29,0.55)]">
+            {t('act4.body')}
+          </p>
+        </Act4Banner>
+      </Act4Trigger>
+
+      {/* Page-level overlays scrubbed by act4Progress. Live at the root of
+          <main> so they sit above the BackgroundCanvas (z-5) but cooperate
+          with the editorial copy via mix-blend-mode + opacity ramps. Each
+          self-disables when a4 = 0, so they're invisible during Acts 1–3. */}
+      <CausticsOverlay />
+      <GodRaysCanvas />
+      <WaterCrossFlash />
     </main>
   );
 }

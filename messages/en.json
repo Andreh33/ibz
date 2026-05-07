@@ -11,6 +11,24 @@
     "gallery": "Gallery",
     "contact": "Contact"
   },
+  "heritage": {
+    "eyebrow": "Forty years",
+    "headline": "40",
+    "subtitle": "of Dutch family adventure on a Spanish island",
+    "timeline": {
+      "t1985": { "year": "1985", "place": "Figueretes", "label": "A van and a dog" },
+      "t2005": { "year": "2005", "place": "Cala San Vicente", "label": "On the Beach" },
+      "t2016": { "year": "2016", "place": "Cala San Vicente", "label": "The Boat House" }
+    },
+    "quote": {
+      "body": "To share your food and spend time with your loved ones while enjoying the beach and sea views — that's our idea of paradise.",
+      "attribution": "Zandwijk Family"
+    }
+  },
+  "act3": {
+    "eyebrow": "Act 3 placeholder",
+    "headline": "The hidden cove"
+  },
   "scaffold": {
     "stepLabel": "Step 2 — Project scaffold",
     "probeLabel": "ScrollTrigger probe — fades in at 75% viewport"

@@ -11,6 +11,24 @@
     "gallery": "Galería",
     "contact": "Contacto"
   },
+  "heritage": {
+    "eyebrow": "Cuarenta años",
+    "headline": "40",
+    "subtitle": "de aventura familiar holandesa en una isla española",
+    "timeline": {
+      "t1985": { "year": "1985", "place": "Figueretes", "label": "Una furgoneta y un perro" },
+      "t2005": { "year": "2005", "place": "Cala San Vicente", "label": "On the Beach" },
+      "t2016": { "year": "2016", "place": "Cala San Vicente", "label": "The Boat House" }
+    },
+    "quote": {
+      "body": "Compartir tu comida y pasar tiempo con tus seres queridos mientras disfrutáis de las vistas de la playa y del mar — esa es nuestra idea del paraíso.",
+      "attribution": "Familia Zandwijk"
+    }
+  },
+  "act3": {
+    "eyebrow": "Acto 3 (placeholder)",
+    "headline": "La cala escondida"
+  },
   "scaffold": {
     "stepLabel": "Paso 2 — Scaffold del proyecto",
     "probeLabel": "Sonda de ScrollTrigger — aparece al 75% del viewport"

@@ -11,6 +11,24 @@
     "gallery": "Galerie",
     "contact": "Kontakt"
   },
+  "heritage": {
+    "eyebrow": "Vierzig Jahre",
+    "headline": "40",
+    "subtitle": "niederländisches Familienabenteuer auf einer spanischen Insel",
+    "timeline": {
+      "t1985": { "year": "1985", "place": "Figueretes", "label": "Ein Lieferwagen und ein Hund" },
+      "t2005": { "year": "2005", "place": "Cala San Vicente", "label": "On the Beach" },
+      "t2016": { "year": "2016", "place": "Cala San Vicente", "label": "The Boat House" }
+    },
+    "quote": {
+      "body": "Mit den Liebsten essen und die Zeit am Strand und Meer genießen — das ist unsere Vorstellung vom Paradies.",
+      "attribution": "Familie Zandwijk"
+    }
+  },
+  "act3": {
+    "eyebrow": "Akt 3 (Platzhalter)",
+    "headline": "Die versteckte Bucht"
+  },
   "scaffold": {
     "stepLabel": "Schritt 2 — Projekt-Scaffold",
     "probeLabel": "ScrollTrigger-Test — blendet bei 75% des Viewports ein"

@@ -11,6 +11,24 @@
     "gallery": "Galerij",
     "contact": "Contact"
   },
+  "heritage": {
+    "eyebrow": "Veertig jaar",
+    "headline": "40",
+    "subtitle": "Nederlands familieavontuur op een Spaans eiland",
+    "timeline": {
+      "t1985": { "year": "1985", "place": "Figueretes", "label": "Een busje en een hond" },
+      "t2005": { "year": "2005", "place": "Cala San Vicente", "label": "On the Beach" },
+      "t2016": { "year": "2016", "place": "Cala San Vicente", "label": "The Boat House" }
+    },
+    "quote": {
+      "body": "Samen eten en tijd doorbrengen met je dierbaren, terwijl je geniet van het uitzicht op het strand en de zee — dat is voor ons het paradijs.",
+      "attribution": "Familie Zandwijk"
+    }
+  },
+  "act3": {
+    "eyebrow": "Akte 3 (placeholder)",
+    "headline": "De verborgen baai"
+  },
   "scaffold": {
     "stepLabel": "Stap 2 — Project-scaffold",
     "probeLabel": "ScrollTrigger-test — verschijnt op 75% van het viewport"

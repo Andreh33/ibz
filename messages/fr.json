@@ -11,6 +11,24 @@
     "gallery": "Galerie",
     "contact": "Contact"
   },
+  "heritage": {
+    "eyebrow": "Quarante ans",
+    "headline": "40",
+    "subtitle": "d'aventure familiale néerlandaise sur une île espagnole",
+    "timeline": {
+      "t1985": { "year": "1985", "place": "Figueretes", "label": "Un fourgon et un chien" },
+      "t2005": { "year": "2005", "place": "Cala San Vicente", "label": "On the Beach" },
+      "t2016": { "year": "2016", "place": "Cala San Vicente", "label": "The Boat House" }
+    },
+    "quote": {
+      "body": "Partager votre repas et passer du temps avec vos proches tout en profitant de la vue sur la plage et la mer — c'est notre idée du paradis.",
+      "attribution": "Famille Zandwijk"
+    }
+  },
+  "act3": {
+    "eyebrow": "Acte 3 (placeholder)",
+    "headline": "La crique cachée"
+  },
   "scaffold": {
     "stepLabel": "Étape 2 — Squelette du projet",
     "probeLabel": "Sonde ScrollTrigger — apparaît à 75% du viewport"

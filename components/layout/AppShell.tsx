@@ -7,7 +7,6 @@ import { LenisProvider } from './LenisProvider';
 import { Preloader } from './Preloader';
 import { SiteFooter } from './SiteFooter';
 import { SiteHeader } from './SiteHeader';
-import { StaticHomeBackground } from './StaticHomeBackground';
 
 // SSR-disabled: r3f / WebGL only meaningful on the client.
 const SceneRoot = dynamic(
@@ -31,11 +30,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   return (
     <LenisProvider>
       <Preloader />
-      {/* Brand-static background photograph — visible on home only, sits
-          BELOW the WebGL scene root so it shows through the alpha sky. */}
-      {isHome && <StaticHomeBackground />}
-      {/* CLAUDE.md §9 z-5 — sky, anchor, chain, water on home; off on
-          editorial subpages so the ivory canvas reads cleanly. */}
+      {/* CLAUDE.md §9 z-5 — sky, brand-static fondohome.webp plane,
+          anchor, chain, water on home; off on editorial subpages so the
+          ivory canvas reads cleanly. The photo plane lives INSIDE
+          SceneRoot so the anchor + chain pass in front of it via the
+          shared depth buffer (HTML overlay version was retired —
+          components/layout/StaticHomeBackground.tsx remains in tree as
+          a deprecated stub). */}
       {isHome && <SceneRoot />}
       {/* Floating header on every page — transparent over home, solid on
           subpages. */}

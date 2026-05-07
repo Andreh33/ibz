@@ -5,6 +5,7 @@ import { Canvas } from '@react-three/fiber';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { AnchorChain } from './AnchorChain';
 import { AtmosphericFog } from './AtmosphericFog';
+import { BackgroundPhotoPlane } from './BackgroundPhotoPlane';
 import { SceneLoader } from './SceneLoader';
 import { SkyEnvironment } from './SkyEnvironment';
 import { WaterPlane } from './WaterPlane';
@@ -37,7 +38,16 @@ export function SceneRoot() {
         eventPrefix="client"
       >
         <SceneLoader />
+        {/* Layered backdrop, draw order matters:
+            1. SkyEnvironment — inside-out sphere, renderOrder -1, the
+               cobalt → underwater gradient.
+            2. BackgroundPhotoPlane — fondohome.webp on a static plane in
+               front of the sky but behind everything 3D. Fades out during
+               the cross-water beat so it doesn't clash with turquoise. */}
         <SkyEnvironment />
+        <Suspense fallback={null}>
+          <BackgroundPhotoPlane />
+        </Suspense>
         <AtmosphericFog />
         <ambientLight intensity={0.4} />
         <directionalLight position={[5, 8, 5]} intensity={2.5} castShadow={false} />

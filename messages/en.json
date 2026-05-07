@@ -9,7 +9,8 @@
     "menu": "Menu",
     "about": "About",
     "gallery": "Gallery",
-    "contact": "Contact"
+    "contact": "Contact",
+    "press": "Press"
   },
   "heritage": {
     "eyebrow": "Forty years",
@@ -159,6 +160,76 @@
     "emailLabel": "Email",
     "hoursLabel": "Hours",
     "directionsLabel": "Driving from Ibiza Town"
+  },
+  "press": {
+    "eyebrow": "Press",
+    "headline": "What others have written",
+    "intro": "Six selected mentions across the past four seasons. The longer archive is in the Sanity CMS — these are the editorial highlights.",
+    "readArticle": "Read the article",
+    "contactLabel": "Press desk",
+    "contactTitle": "For interviews, photoshoots, and tasting visits",
+    "contactBody": "We host journalists weekly during shoulder seasons. Send your outlet, the angle, and the dates — we'll arrange a tasting with chef Lieke and a quiet corner of the deck.",
+    "contactCta": "Contact our press desk"
+  },
+  "chef": {
+    "eyebrow": "The kitchen",
+    "headline": "Lieke Zandwijk",
+    "intro": "Daughter of the founders, fifth-year chef de cuisine at The Boat House. Trained across three continents, she runs the pass with her brother Sven.",
+    "name": "Lieke Zandwijk",
+    "role": "Chef de cuisine",
+    "pullQuote": "I cook the cove first. The plates come second.",
+    "body1": "Lieke grew up between Amsterdam and Cala San Vicente. The kitchen of her parents' first restaurant in Figueretes is the room where she learned to peel garlic and read the sea — both at once, both seasonally.",
+    "body2": "After culinary school in Amsterdam she worked the line at Het Bosch, then crossed to Madrid for a year under Dabiz Muñoz at DiverXO, and finally to Bangkok for a season at Gaggan. She came home in 2018 to take the pass at The Boat House.",
+    "body3": "Her food philosophy is editorial: small menu, deep sourcing, no garnish for garnish's sake. The cove farm — opened by the family in 2025 — is her daily restraint: vegetables that walked to the kitchen the same morning, herbs cut at 11:00 for service at 13:00.",
+    "trainingLabel": "Training",
+    "signaturesLabel": "Signatures",
+    "signaturesHeadline": "Plates that read as Lieke",
+    "sigPaella": "Bomba rice, the morning's catch, sofrito made the day before. Slow until the pan whispers.",
+    "sigTomahawk": "Galician Friesian, dry-aged fifty days, finished over olive wood, salsa verde from the cove herbs.",
+    "sigCurry": "Bangkok roots, Mediterranean catch — local sea-bass, prawns from Formentera, kaffir from the farm.",
+    "sigLeaves": "Cove farm leaves, sherry-wine-vinegar emulsion, citrus segmented at the pass."
+  },
+  "legal": {
+    "eyebrow": "Legal",
+    "lastUpdated": "Last updated",
+    "privacy": {
+      "title": "Privacy",
+      "s1Title": "1. Who we are",
+      "s1Body": "The Boat House Ibiza S.L. operates this site at theboathouseibiza.com. Registered office: Calle del Calo 12, 07810 Sant Joan de Labritja, Eivissa.",
+      "s2Title": "2. What we collect",
+      "s2Body": "Reservation requests (name, email, date, party size, message), language preference, anonymous analytics on page visits and scroll depth via Vercel Analytics. We do not run third-party advertising trackers.",
+      "s3Title": "3. How we use it",
+      "s3Body": "Reservation data goes to the front-of-house system (Sevenrooms) to confirm your booking and send a single reminder. Analytics is aggregated, never tied to you personally.",
+      "s4Title": "4. Your rights",
+      "s4Body": "Under EU GDPR you can request access, correction or deletion of your personal data at hello@theboathouseibiza.com. We respond within 30 days.",
+      "s5Title": "5. Retention",
+      "s5Body": "Reservation records are kept for 24 months for accounting and recurring-guest recognition, then deleted. Analytics is rolled up to monthly aggregates after 13 months."
+    },
+    "cookies": {
+      "title": "Cookies",
+      "intro": "We use only cookies that are strictly necessary to make the site work, plus a single anonymised analytics cookie. No advertising, no cross-site tracking.",
+      "thName": "Name",
+      "thPurpose": "Purpose",
+      "thDuration": "Duration",
+      "r1Purpose": "Remembers your selected language across visits.",
+      "r1Duration": "1 year",
+      "r2Purpose": "Anonymised page-view counts. Aggregated by Vercel.",
+      "r2Duration": "Session",
+      "r3Purpose": "Holds your reservation form between page loads on /contact.",
+      "r3Duration": "1 hour",
+      "contact": "Questions about cookies: hello@theboathouseibiza.com."
+    },
+    "terms": {
+      "title": "Terms",
+      "s1Title": "1. Reservations",
+      "s1Body": "Reservations are confirmed by email. We hold tables for 15 minutes past the booked time. For groups over six, a deposit may be requested — we'll always tell you in writing first.",
+      "s2Title": "2. Cancellations",
+      "s2Body": "Free up to 24 hours before the booking. Inside 24 hours we may charge a per-person fee of €15 to cover prepped produce. No charge for force-majeure (illness, weather, port closure).",
+      "s3Title": "3. Allergies",
+      "s3Body": "Tell us at the time of booking. Our kitchen handles gluten, shellfish, nuts and dairy daily; we cannot guarantee a fully cross-contamination-free environment.",
+      "s4Title": "4. Liability",
+      "s4Body": "The cove and its access path are public. We are not responsible for property left in the parking area or on the public beach. The aquarium-floor section of the deck is accessible; please supervise children."
+    }
   },
   "footer": {
     "tagline": "A family table by the sea — Cala San Vicente, since 2016.",

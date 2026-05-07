@@ -9,7 +9,8 @@
     "menu": "Carta",
     "about": "Nosotros",
     "gallery": "Galería",
-    "contact": "Contacto"
+    "contact": "Contacto",
+    "press": "Prensa"
   },
   "heritage": {
     "eyebrow": "Cuarenta años",
@@ -149,10 +150,38 @@
     "chefName": "Lieke Zandwijk",
     "chefBio": "Formada en Amsterdam, Madrid y Bangkok, Lieke dirige la cocina con su hermano Sven en pase. Su comida se lee como una postal: una paella que mira a Valencia pero habla mediterráneo ibicenco, un curry que viaja desde Bangkok hasta la cala."
   },
+  "chef": {
+    "eyebrow": "La cocina",
+    "headline": "Lieke Zandwijk",
+    "intro": "Hija de los fundadores, quinto año como chef de cocina en The Boat House. Formada en tres continentes, lleva el pase con su hermano Sven.",
+    "name": "Lieke Zandwijk",
+    "role": "Chef de cocina",
+    "pullQuote": "Cocino primero la cala. Los platos vienen después.",
+    "body1": "Lieke creció entre Amsterdam y Cala San Vicente. La cocina del primer restaurante de sus padres en Figueretes es la habitación donde aprendió a pelar ajos y a leer el mar — al mismo tiempo, ambos por temporada.",
+    "body2": "Después de la escuela en Amsterdam pasó por la línea de Het Bosch, cruzó a Madrid un año bajo Dabiz Muñoz en DiverXO, y finalmente a Bangkok una temporada en Gaggan. Volvió a casa en 2018 para tomar el pase de The Boat House.",
+    "body3": "Su filosofía es editorial: carta corta, sourcing profundo, sin guarniciones por relleno. La finca de la cala — abierta por la familia en 2025 — es su disciplina diaria: verduras que caminan a la cocina la misma mañana, hierbas cortadas a las 11:00 para el servicio de las 13:00.",
+    "trainingLabel": "Formación",
+    "signaturesLabel": "Platos firma",
+    "signaturesHeadline": "Platos que se leen como Lieke",
+    "sigPaella": "Arroz bomba, el pescado de la mañana, sofrito hecho la víspera. A fuego lento hasta que la paella susurra.",
+    "sigTomahawk": "Vaca frisona gallega, madurada cincuenta días, terminada sobre madera de olivo, salsa verde con hierbas de la finca.",
+    "sigCurry": "Raíces de Bangkok, pesca mediterránea — lubina local, gambas de Formentera, kaffir de la finca.",
+    "sigLeaves": "Hojas de la finca, emulsión de jerez, cítricos cortados al pase."
+  },
   "gallery": {
     "eyebrow": "La galería",
     "headline": "Cuarenta temporadas en color",
     "intro": "Platos, caras, cielo, sal. Un archivo libre de la cala y la mesa — actualizado cada primavera."
+  },
+  "press": {
+    "eyebrow": "Prensa",
+    "headline": "Lo que han escrito",
+    "intro": "Seis menciones seleccionadas de las últimas cuatro temporadas. El archivo completo vive en el CMS — estos son los destacados editoriales.",
+    "readArticle": "Leer el artículo",
+    "contactLabel": "Sala de prensa",
+    "contactTitle": "Para entrevistas, sesiones de fotos y visitas de cata",
+    "contactBody": "Recibimos a periodistas semanalmente fuera de temporada alta. Mándanos el medio, el ángulo y las fechas — montamos una cata con la chef Lieke en una esquina tranquila del deck.",
+    "contactCta": "Contactar con prensa"
   },
   "contact": {
     "eyebrow": "Contacto",
@@ -171,6 +200,48 @@
     "emailLabel": "Email",
     "hoursLabel": "Horario",
     "directionsLabel": "Desde Eivissa ciudad"
+  },
+  "legal": {
+    "eyebrow": "Legal",
+    "lastUpdated": "Última actualización",
+    "privacy": {
+      "title": "Privacidad",
+      "s1Title": "1. Quiénes somos",
+      "s1Body": "The Boat House Ibiza S.L. opera este sitio en theboathouseibiza.com. Domicilio social: Calle del Caló 12, 07810 Sant Joan de Labritja, Eivissa.",
+      "s2Title": "2. Qué recogemos",
+      "s2Body": "Solicitudes de reserva (nombre, email, fecha, número de comensales, mensaje), preferencia de idioma, analítica anónima sobre visitas y profundidad de scroll vía Vercel Analytics. No utilizamos rastreadores publicitarios.",
+      "s3Title": "3. Cómo lo usamos",
+      "s3Body": "Los datos de reserva van al sistema de sala (Sevenrooms) para confirmar tu reserva y enviar un único recordatorio. La analítica es agregada y nunca se vincula a tu persona.",
+      "s4Title": "4. Tus derechos",
+      "s4Body": "Bajo el GDPR de la UE puedes solicitar acceso, corrección o eliminación de tus datos en hello@theboathouseibiza.com. Respondemos en 30 días.",
+      "s5Title": "5. Conservación",
+      "s5Body": "Los registros de reserva se conservan 24 meses para contabilidad y reconocimiento de huéspedes habituales. La analítica se agrega mensualmente tras 13 meses."
+    },
+    "cookies": {
+      "title": "Cookies",
+      "intro": "Solo utilizamos cookies estrictamente necesarias para que el sitio funcione, más una única cookie de analítica anónima. Sin publicidad, sin tracking entre sitios.",
+      "thName": "Nombre",
+      "thPurpose": "Propósito",
+      "thDuration": "Duración",
+      "r1Purpose": "Recuerda el idioma seleccionado entre visitas.",
+      "r1Duration": "1 año",
+      "r2Purpose": "Conteo anónimo de páginas vistas. Agregado por Vercel.",
+      "r2Duration": "Sesión",
+      "r3Purpose": "Mantiene el formulario de reserva entre cargas en /contact.",
+      "r3Duration": "1 hora",
+      "contact": "Dudas sobre cookies: hello@theboathouseibiza.com."
+    },
+    "terms": {
+      "title": "Términos",
+      "s1Title": "1. Reservas",
+      "s1Body": "Las reservas se confirman por email. Mantenemos las mesas durante 15 minutos pasada la hora reservada. Para grupos de más de seis puede solicitarse una señal — siempre lo comunicamos por escrito antes.",
+      "s2Title": "2. Cancelaciones",
+      "s2Body": "Gratis hasta 24 horas antes. Dentro de las 24 horas podemos cobrar 15 € por persona para cubrir el producto preparado. Sin cargo en caso de fuerza mayor (enfermedad, meteorología, cierre de puerto).",
+      "s3Title": "3. Alergias",
+      "s3Body": "Indícanoslas al reservar. Nuestra cocina trabaja a diario con gluten, marisco, frutos secos y lácteos; no podemos garantizar un entorno totalmente libre de contaminación cruzada.",
+      "s4Title": "4. Responsabilidad",
+      "s4Body": "La cala y su acceso son públicos. No nos hacemos responsables de objetos dejados en el aparcamiento o en la playa pública. La sección de suelo de acuario del deck es accesible; rogamos supervisar a los menores."
+    }
   },
   "footer": {
     "tagline": "Una mesa familiar junto al mar — Cala San Vicente, desde 2016.",

@@ -7,6 +7,7 @@ import { AnchorChain } from './AnchorChain';
 import { AtmosphericFog } from './AtmosphericFog';
 import { BackgroundPhotoPlane } from './BackgroundPhotoPlane';
 import { Bubbles } from './Bubbles';
+import { OceanFloor } from './OceanFloor';
 import { SceneLoader } from './SceneLoader';
 import { SkyEnvironment } from './SkyEnvironment';
 import { WaterPlane } from './WaterPlane';
@@ -65,6 +66,9 @@ export function SceneRoot() {
         </Suspense>
         <Suspense fallback={null}>
           <Bubbles />
+        </Suspense>
+        <Suspense fallback={null}>
+          <OceanFloor />
         </Suspense>
       </Canvas>
     </div>

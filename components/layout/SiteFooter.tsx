@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { routing } from '@/lib/i18n/routing';
+import { AnchorConstellation } from './AnchorConstellation';
 
-const NAV_KEYS = ['menu', 'about', 'gallery', 'contact'] as const;
+const NAV_KEYS = ['menu', 'about', 'gallery', 'contact', 'press'] as const;
 const LOCALE_LABELS: Record<string, string> = {
   en: 'EN', es: 'ES', de: 'DE', fr: 'FR', nl: 'NL', it: 'IT',
 };
@@ -22,6 +23,38 @@ export function SiteFooter() {
 
   return (
     <footer className="relative z-30 bg-deep text-ivory">
+      {/* Anchor silhouette assembled from gold dots — the descent's
+          signature close-out. Triggers when it scrolls into viewport. */}
+      <AnchorConstellation />
+
+      {/* Social rail */}
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-8 border-t border-ivory/10 px-6 py-8">
+        <a
+          href="https://instagram.com/theboathouseibiza"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/70 transition-colors hover:text-gold"
+        >
+          Instagram
+        </a>
+        <span aria-hidden className="text-ivory/20">·</span>
+        <a
+          href="https://facebook.com/theboathouseibiza"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/70 transition-colors hover:text-gold"
+        >
+          Facebook
+        </a>
+        <span aria-hidden className="text-ivory/20">·</span>
+        <a
+          href="tel:+34971334273"
+          className="font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/70 transition-colors hover:text-gold"
+        >
+          +34 971 334 273
+        </a>
+      </div>
+
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 py-20 sm:grid-cols-2 md:grid-cols-4 md:gap-8 md:py-24">
         <div className="md:col-span-1">
           <p className="font-display text-2xl font-light tracking-tight">The Boat House</p>

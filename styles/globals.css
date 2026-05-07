@@ -13,9 +13,9 @@
   --color-gold: #c9a86b;
   --color-gold-deep: #8c6b2f;
 
-  --font-display: 'GT Super Display', 'Recoleta', serif;
-  --font-sans: 'General Sans', 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: var(--font-fraunces), 'GT Super Display', 'Recoleta', serif;
+  --font-sans: 'General Sans', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   --tracking-display: -0.02em;
 }

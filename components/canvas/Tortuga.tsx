@@ -22,7 +22,7 @@ useGLTF.preload(TURTLE_URL);
 //   z: 2 (in front of dish plates, behind editorial copy via the
 //      ForegroundCanvas z-30 layer)
 // Rotation Y: π so the model faces left.
-const TURTLE_TARGET_LENGTH = 4.5;
+const TURTLE_TARGET_LENGTH = 3.2;
 const TURTLE_FROM_X = 8;
 const TURTLE_TO_X = -8;
 const CYCLE_SECONDS = 6;
@@ -88,7 +88,7 @@ export function Tortuga() {
     }
     groupRef.current.position.x = x;
     groupRef.current.position.y = 0 + Math.sin(t * 0.6) * 0.08;
-    groupRef.current.position.z = 4 + Math.sin(t * 0.4 + 1.0) * 0.15;
+    groupRef.current.position.z = 2 + Math.sin(t * 0.4 + 1.0) * 0.15;
     groupRef.current.rotation.x = Math.sin(t * 0.6) * 0.06;
   });
 

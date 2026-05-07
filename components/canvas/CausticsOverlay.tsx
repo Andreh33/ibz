@@ -82,8 +82,9 @@ function CausticsMesh() {
     const a4 = useDescentStore.getState().act4Progress;
     // Smoothstep from the cross-water moment to the end of the pin.
     const target = Math.max(0, Math.min(1, (a4 - 0.5) / 0.5));
-    matRef.current.uniforms.uTime.value = state.clock.elapsedTime;
-    matRef.current.uniforms.uIntensity.value = target;
+    const u = matRef.current.uniforms;
+    if (u.uTime) u.uTime.value = state.clock.elapsedTime;
+    if (u.uIntensity) u.uIntensity.value = target;
   });
 
   return (

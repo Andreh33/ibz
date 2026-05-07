@@ -3,7 +3,6 @@ import { getTranslations } from 'next-intl/server';
 import { DisintegrationTransition } from '@/components/canvas/DisintegrationTransition';
 import { IbizaSilhouette } from '@/components/canvas/IbizaSilhouette';
 import { CausticsOverlay } from '@/components/canvas/CausticsOverlay';
-import { GodRaysCanvas } from '@/components/canvas/GodRaysCanvas';
 import { Act1Trigger } from '@/components/layout/Act1Trigger';
 import { Act4Banner } from '@/components/layout/Act4Banner';
 import { Act4Trigger } from '@/components/layout/Act4Trigger';
@@ -13,6 +12,7 @@ import { DishesTrack } from '@/components/layout/DishesTrack';
 import { ScrollHint } from '@/components/layout/ScrollHint';
 import { WaterCrossFlash } from '@/components/layout/WaterCrossFlash';
 import { WordmarkReveal } from '@/components/layout/WordmarkReveal';
+import Link from 'next/link';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -245,12 +245,86 @@ export default async function HomePage({ params }: Props) {
         <DishesTrack />
       </Act5Trigger>
 
-      {/* Page-level overlays scrubbed by act4Progress. Live at the root of
-          <main> so they sit above the BackgroundCanvas (z-5) but cooperate
-          with the editorial copy via mix-blend-mode + opacity ramps. Each
-          self-disables when a4 = 0, so they're invisible during Acts 1–3. */}
+      {/* === ACT 6 — On the water (catering / boat delivery) === */}
+      <section className="relative px-6 py-32 sm:py-40">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 md:grid-cols-12 md:gap-20">
+          <div className="md:col-span-6">
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/80">
+              {t('act6.eyebrow')}
+            </p>
+            <h2 className="mt-6 font-display text-[clamp(36px,5vw,68px)] font-light leading-[1.05] tracking-[-0.02em] text-ivory drop-shadow-[0_2px_24px_rgba(4,16,29,0.5)]">
+              {t('act6.headline')}
+            </h2>
+            <p className="mt-8 max-w-[44ch] font-sans text-base leading-relaxed text-ivory/85 drop-shadow-[0_2px_18px_rgba(4,16,29,0.55)]">
+              {t('act6.body')}
+            </p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Link
+                href={`/${locale}/contact`}
+                className="rounded-full bg-ivory/95 px-6 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-deep transition hover:bg-gold hover:text-deep"
+              >
+                {t('act6.ctaCatering')}
+              </Link>
+              <Link
+                href={`/${locale}/contact`}
+                className="rounded-full border border-ivory/40 px-6 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-ivory transition hover:bg-ivory/10"
+              >
+                {t('act6.ctaTable')}
+              </Link>
+            </div>
+          </div>
+          <div className="md:col-span-6">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-sm shadow-[0_30px_80px_rgba(4,16,29,0.55)]">
+              <img
+                src="/images/GR2C2341-scaled-1600.avif"
+                alt=""
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* === ACT 7 — Where every story settles (close + CTA) === */}
+      <section className="relative px-6 py-32 sm:py-40">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/80">
+            {t('act7.eyebrow')}
+          </p>
+          <h2 className="mt-6 font-display text-[clamp(40px,6vw,84px)] font-light leading-[1.05] tracking-[-0.02em] text-ivory drop-shadow-[0_2px_24px_rgba(4,16,29,0.5)]">
+            {t('act7.headline')}
+          </h2>
+          <p className="mx-auto mt-8 max-w-[48ch] font-sans text-base leading-relaxed text-ivory/85 drop-shadow-[0_2px_18px_rgba(4,16,29,0.55)]">
+            {t('act7.body')}
+          </p>
+          <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/70">
+            {t('act7.address')}
+          </p>
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
+            <Link
+              href={`/${locale}/contact`}
+              className="rounded-full bg-ivory/95 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-deep transition hover:bg-gold hover:text-deep"
+            >
+              {t('act7.ctaReserve')}
+            </Link>
+            <a
+              href="https://maps.google.com/?q=Cala+San+Vicente+Ibiza+The+Boat+House"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-ivory/40 px-8 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-ivory transition hover:bg-ivory/10"
+            >
+              {t('act7.ctaDirections')}
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Page-level overlays scrubbed by act4Progress. The god-rays canvas
+          was removed per editorial direction — fake sun-shafts under water
+          read as plastic 3D-stock and undersold the brand. The cross-flash
+          + caustics still carry the moment without them. */}
       <CausticsOverlay />
-      <GodRaysCanvas />
       <WaterCrossFlash />
     </main>
   );

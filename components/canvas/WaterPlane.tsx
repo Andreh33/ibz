@@ -91,7 +91,7 @@ export function WaterPlane() {
   useFrame((_, delta) => {
     // Always animate the ripples — cheap and gives life when the surface
     // is briefly visible during emergence.
-    const m = water.material as { uniforms: { time: { value: number } } };
+    const m = water.material as unknown as { uniforms: { time: { value: number } } };
     m.uniforms.time.value += delta;
 
     // Drive Y position from raw scroll position so the plane begins

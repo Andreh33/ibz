@@ -22,7 +22,7 @@ useGLTF.preload(TURTLE_URL);
 //   z: 2 (in front of dish plates, behind editorial copy via the
 //      ForegroundCanvas z-30 layer)
 // Rotation Y: π so the model faces left.
-const TURTLE_TARGET_LENGTH = 4.5;
+const TURTLE_TARGET_LENGTH = 3.2;
 const TURTLE_FROM_X = 8;
 const TURTLE_TO_X = -8;
 const CYCLE_SECONDS = 6;
@@ -57,8 +57,9 @@ export function Tortuga() {
   // Play the bundled swim animation. Some Sketchfab exports name the clip
   // differently, so play whichever first action exists.
   useEffect(() => {
-    if (!names.length) return;
-    const action = actions[names[0]];
+    const first = names[0];
+    if (!first) return;
+    const action = actions[first];
     action?.reset().play();
     return () => {
       action?.stop();
@@ -88,19 +89,17 @@ export function Tortuga() {
     }
     groupRef.current.position.x = x;
     groupRef.current.position.y = 0 + Math.sin(t * 0.6) * 0.08;
-    groupRef.current.position.z = 4 + Math.sin(t * 0.4 + 1.0) * 0.15;
+    groupRef.current.position.z = 2 + Math.sin(t * 0.4 + 1.0) * 0.15;
     groupRef.current.rotation.x = Math.sin(t * 0.6) * 0.06;
   });
 
-  // tortuganueva.glb native orientation (verified empirically): rest pose
-  // has head pointing +Y (up). Swim animation tilts forward along +Z, so
-  // the swimmer's "forward" is +Z in object space. To make the turtle
-  // swim right→left across the viewport with the head pointing -X, we
-  // rotate X = +π/2 first (tilt the upright pose down to horizontal,
-  // mapping +Y → +Z), then Y = -π/2 (rotate that horizontal +Z forward
-  // to -X). Three.js Euler order XYZ applies X rotation first.
+  // tortuganueva.glb native orientation: rest pose has head pointing +Y
+  // (up). Swim forward in object space is along -Z (verified visually —
+  // first attempt with -Z had the turtle moving tail-first). We tilt
+  // the upright pose down with X = +π/2, then rotate Y = +π/2 so the
+  // head ends up facing -X to match the right→left swim direction.
   return (
-    <group ref={groupRef} rotation={[Math.PI / 2, -Math.PI / 2, 0]}>
+    <group ref={groupRef} rotation={[Math.PI / 2, Math.PI / 2, 0]}>
       <group
         position={[
           -transform.center.x * transform.scale,

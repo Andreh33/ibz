@@ -80,8 +80,8 @@ export function SkyEnvironment() {
       fog: true,
     });
   }, []);
-  const topRef = useRef(material.uniforms.topColor.value as Color);
-  const horRef = useRef(material.uniforms.horizonColor.value as Color);
+  const topRef = useRef((material.uniforms.topColor?.value as Color) ?? new Color());
+  const horRef = useRef((material.uniforms.horizonColor?.value as Color) ?? new Color());
 
   useFrame(() => {
     const a4 = useDescentStore.getState().act4Progress;

@@ -1,0 +1,100 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-05-07T05:23:42Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "relation",
+  "id": 347249,
+  "tags": {
+    "admin_level": "8",
+    "border_type": "municipi",
+    "boundary": "administrative",
+    "contact:phone": "+34 971 397 600",
+    "contact:website": "https://www.eivissa.es",
+    "idee:name": "Eivissa",
+    "ine:municipio": "07026",
+    "int_name": "Ibiza",
+    "name": "Eivissa",
+    "name:ar": "يابسة",
+    "name:ca": "Eivissa",
+    "name:de": "Ibiza-Stadt",
+    "name:es": "Ibiza",
+    "name:fr": "Ibiza",
+    "name:gl": "Eivisa",
+    "name:pt": "Ibiza",
+    "population": "54628",
+    "population:date": "2025",
+    "ref:ine": "07026000000",
+    "source": "BDLL25, EGRN, Instituto Geográfico Nacional",
+    "type": "boundary",
+    "wikidata": "Q473914",
+    "wikipedia": "ca:Eivissa (municipi)"
+  }
+},
+{
+  "type": "relation",
+  "id": 2181664,
+  "tags": {
+    "admin_level": "7",
+    "alt_name:ar": "إيبيزا;إيبيسا",
+    "border_type": "comarca",
+    "boundary": "administrative",
+    "int_name": "Ibiza",
+    "name": "Eivissa",
+    "name:ar": "يابسة",
+    "name:ca": "Eivissa",
+    "name:da": "Ibiza",
+    "name:de": "Ibiza",
+    "name:en": "Ibiza",
+    "name:fr": "Ibiza",
+    "name:gl": "Eivisa",
+    "name:hu": "Íbiza",
+    "name:nl": "Ibiza",
+    "name:pt": "Ibiza",
+    "name:uk": "Ібіса",
+    "name:zh": "伊维萨岛",
+    "official_name": "Eivissa",
+    "political_division": "insular_council",
+    "type": "boundary",
+    "wikidata": "Q52631",
+    "wikipedia": "ca:Eivissa"
+  }
+},
+{
+  "type": "relation",
+  "id": 6076060,
+  "tags": {
+    "alt_name:ar": "إيبيزا;إيبيسا",
+    "name": "Eivissa",
+    "name:ar": "يابسة",
+    "name:ca": "Eivissa",
+    "name:da": "Ibiza",
+    "name:de": "Ibiza",
+    "name:en": "Ibiza",
+    "name:es": "Ibiza",
+    "name:fr": "Ibiza",
+    "name:hu": "Íbiza",
+    "name:ja": "イビサ島",
+    "name:nl": "Ibiza",
+    "name:oc": "Eivissa",
+    "name:pl": "Ibiza",
+    "name:pt": "Ibiza",
+    "name:uk": "Ібіса",
+    "name:zh": "伊维萨岛",
+    "name:zh-Hans": "伊维萨岛",
+    "name:zh-Hant": "伊比薩島",
+    "place": "island",
+    "reg_name": "Eivissa",
+    "type": "multipolygon",
+    "wikidata": "Q52631",
+    "wikipedia": "es:Ibiza"
+  }
+}
+
+  ]
+}

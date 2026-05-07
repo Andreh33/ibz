@@ -13,9 +13,4 @@ dist
 .DS_Store
 *.log
 
-modelo
-_source
-public/models
-public/images
-
 tools/node_modules

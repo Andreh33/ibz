@@ -73,10 +73,19 @@ export function DisintegrationTransition({
   const [bounds, setBounds] = useState<{ width: number; height: number } | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
 
-  // Detect prefers-reduced-motion.
+  // Detect prefers-reduced-motion. Logs explicit mode at mount so we can
+  // tell from the dev console / puppeteer whether the WebGL shader is
+  // active or whether the CSS-only fallback has been picked instead.
   useEffect(() => {
     const m = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setReducedMotion(m.matches);
+    const reduced = m.matches;
+    setReducedMotion(reduced);
+    if (process.env.NODE_ENV !== 'production') {
+      // biome-ignore lint/suspicious/noConsole: dev only
+      console.log(
+        `[disint] prefers-reduced-motion=${reduced} → mode=${reduced ? 'CSS_FALLBACK' : 'WEBGL_SHADER'}`,
+      );
+    }
     const onChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     m.addEventListener('change', onChange);
     return () => m.removeEventListener('change', onChange);
@@ -201,7 +210,7 @@ export function DisintegrationTransition({
           start: triggerStart,
           end: triggerEnd,
           scrub: true,
-          markers: process.env.NODE_ENV !== 'production',
+          markers: false,
           id: 'disint',
           onUpdate: (self) => {
             progressTargetRef.current = self.progress;

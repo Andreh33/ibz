@@ -3,34 +3,64 @@
 import { useEffect, useRef } from 'react';
 import { useDescentStore } from '@/lib/store/descent';
 
-// Six signature dishes per CLAUDE.md §3 Act 5. Pulled from the published
-// menu (sanity/seed/menu.json + the spec); prices in EUR. Each plate is
-// a circular gradient + gold ring + dish name on top — no photos, since
-// the brief deliberately avoids stock-style food shots and we don't yet
-// have an editorial photoshoot to pull from. The visual is editorial
-// menu-card, not Instagram bowl.
+// Five signature dishes per CLAUDE.md §3 Act 5. The Sanity dish schema has
+// an `image` field but the seed (sanity/seed/menu.json) ships text only —
+// no image assets staged yet. Until the chef provides editorial photos to
+// upload to Sanity, we map each dish to one of the existing site images
+// shipped under public/images (the originals from the live site). Each
+// plate is a circular crop of the photograph with a slowly rotating gold
+// ring around it.
 type Dish = {
   id: string;
   name: string;
   price: string;
   origin: string;
-  hue: string; // base swatch driving the radial gradient
+  image: string; // /images/<base>-1080.avif
 };
 
 const DISHES: Dish[] = [
-  { id: 'paella', name: 'Paella melosa', price: '29,50 €', origin: 'Seafood & fish — for two', hue: '#C8A06E' },
-  { id: 'tomahawk', name: 'Friesian Tomahawk', price: '90 € / kg', origin: 'Galicia — 50-day dry-aged', hue: '#7A3A2A' },
-  { id: 'wagyu', name: 'Wagyu Boat House Burger', price: '32 €', origin: 'Boat House signature', hue: '#9D4E3B' },
-  { id: 'curry', name: 'Thai Fish & Seafood Curry', price: '28 €', origin: 'Mediterranean catch', hue: '#E2A83A' },
-  { id: 'lamb', name: 'Slow Lamb Shoulder', price: '34 €', origin: 'Estate-raised', hue: '#A65A3F' },
-  { id: 'vegan', name: 'Vegan Yellow Curry', price: '24 €', origin: 'From the cove farm', hue: '#D9B956' },
+  {
+    id: 'paella',
+    name: 'Paella melosa',
+    price: '29,50 €',
+    origin: 'Seafood & fish — for two',
+    image: '/images/Mains-1-1080.avif',
+  },
+  {
+    id: 'tomahawk',
+    name: 'Friesian Tomahawk',
+    price: '90 € / kg',
+    origin: 'Galicia — 50-day dry-aged',
+    image: '/images/Mains-3-1080.avif',
+  },
+  {
+    id: 'wagyu',
+    name: 'Wagyu Boat House Burger',
+    price: '32 €',
+    origin: 'Boat House signature',
+    image: '/images/Mains-4-1080.avif',
+  },
+  {
+    id: 'curry',
+    name: 'Thai Fish & Seafood Curry',
+    price: '28 €',
+    origin: 'Mediterranean catch',
+    image: '/images/Main-A-1080.avif',
+  },
+  {
+    id: 'lamb',
+    name: 'Slow Lamb Shoulder',
+    price: '34 €',
+    origin: 'Estate-raised',
+    image: '/images/Tapas-D-1080.avif',
+  },
 ];
 
-// Each dish takes one "viewport-equivalent" of horizontal track (28rem wide).
-// 6 dishes → track width 6 × 28rem = 168rem ≈ 2688 px at 16 px root. The
-// scrub maps act5Progress 0.05 → 0.95 across that width so the user gets
-// a calm tail-in / tail-out at each end.
-const DISH_WIDTH_REM = 28;
+// Each dish takes one "viewport-equivalent" of horizontal track (38rem
+// wide) with the plate itself rendered at 24rem (~384 px) so the food
+// photo dominates each frame and is clearly identifiable.
+const DISH_WIDTH_REM = 38;
+const PLATE_SIZE_REM = 24;
 const SCRUB_FROM = 0.05;
 const SCRUB_TO = 0.95;
 
@@ -109,8 +139,12 @@ function DishPlate({ dish, index }: { dish: Dish; index: number }) {
     >
       <div
         ref={wrapperRef}
-        className="relative flex h-72 w-72 items-center justify-center"
-        style={{ willChange: 'transform, opacity' }}
+        className="relative flex items-center justify-center"
+        style={{
+          width: `${PLATE_SIZE_REM}rem`,
+          height: `${PLATE_SIZE_REM}rem`,
+          willChange: 'transform, opacity',
+        }}
       >
         {/* Outer slowly-rotating gold ring — gives the plate a sense of
             craft / ceremony without being literal food photography. */}
@@ -120,32 +154,40 @@ function DishPlate({ dish, index }: { dish: Dish; index: number }) {
           className="absolute inset-0 rounded-full"
           style={{
             background: `conic-gradient(from 0deg, rgba(201, 168, 107, 0.0), rgba(201, 168, 107, 0.65), rgba(201, 168, 107, 0.0) 50%, rgba(201, 168, 107, 0.45) 75%, rgba(201, 168, 107, 0.0))`,
-            mask: 'radial-gradient(circle, transparent 53%, #000 56%, #000 60%, transparent 63%)',
-            WebkitMask: 'radial-gradient(circle, transparent 53%, #000 56%, #000 60%, transparent 63%)',
+            mask: 'radial-gradient(circle, transparent 51%, #000 54%, #000 58%, transparent 61%)',
+            WebkitMask: 'radial-gradient(circle, transparent 51%, #000 54%, #000 58%, transparent 61%)',
           }}
         />
-        {/* Plate body: radial gradient driven by the dish hue. The centre is
-            warm and bright, edges fade into the deep underwater backdrop. */}
+        {/* Plate body — circular crop of the editorial dish photograph
+            without an overlay so the food reads at full saturation. The
+            dish title sits OUTSIDE the plate (below) instead of stamped
+            on top. */}
         <div
-          className="absolute inset-4 rounded-full"
+          className="absolute inset-4 overflow-hidden rounded-full"
           style={{
-            background: `radial-gradient(circle at 50% 40%, ${dish.hue}, ${dish.hue}99 35%, #0E2C3A66 75%, #0E2C3A33)`,
-            boxShadow: '0 18px 48px rgba(4, 16, 29, 0.55), inset 0 0 30px rgba(0, 0, 0, 0.35)',
+            boxShadow: '0 24px 56px rgba(4, 16, 29, 0.6), inset 0 0 40px rgba(0, 0, 0, 0.25)',
           }}
-        />
-        {/* Centre disk with the dish title — keeps the editorial typography
-            visible without competing with photography we don't have. */}
-        <div className="relative z-10 flex h-44 w-44 items-center justify-center rounded-full bg-deep/55 backdrop-blur-sm">
-          <span className="px-3 text-center font-display text-base font-light leading-tight text-ivory drop-shadow-[0_2px_8px_rgba(4,16,29,0.6)]">
-            {dish.name}
-          </span>
+        >
+          <img
+            src={dish.image}
+            alt={dish.name}
+            className="h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       </div>
-      <div className="mt-8 text-center">
-        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-ivory/70">
+      {/* Title + origin + price below the plate. Larger plate + clear caption
+          stack reads as an editorial menu card rather than a stamped Insta-
+          gram-style overlay. */}
+      <div className="mt-8 max-w-[24rem] text-center">
+        <h3 className="font-display text-2xl font-light leading-tight text-ivory drop-shadow-[0_2px_12px_rgba(4,16,29,0.55)]">
+          {dish.name}
+        </h3>
+        <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.3em] text-ivory/70">
           {dish.origin}
         </p>
-        <p className="mt-3 font-display text-xl text-ivory">{dish.price}</p>
+        <p className="mt-3 font-display text-2xl font-light text-ivory">{dish.price}</p>
       </div>
     </div>
   );

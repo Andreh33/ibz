@@ -27,7 +27,7 @@ export function ScrollTriggerProbe({ label }: { label: string }) {
           trigger: el,
           start: 'top 75%',
           toggleActions: 'play none none reverse',
-          markers: process.env.NODE_ENV !== 'production',
+          markers: false,
           id: 'probe-fade',
         },
       },

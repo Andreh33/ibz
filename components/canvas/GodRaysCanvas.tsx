@@ -95,8 +95,17 @@ function Ray({ cfg }: { cfg: RayConfig }) {
   useFrame((state) => {
     const t = state.clock.elapsedTime;
     const a4 = useDescentStore.getState().act4Progress;
-    // Smoothstep fade: invisible until cross moment, full by end of pin.
-    const fade = MathUtils.smoothstep(Math.max(0, Math.min(1, (a4 - 0.5) / 0.5)), 0, 1);
+    const a5 = useDescentStore.getState().act5Progress;
+    // Light shafts are scoped to Act 4 only — fade in across the cross
+    // beat (a4 0.5 → 1.0) and quickly cut out at the very start of Act 5
+    // (a5 0 → 0.005, ≈ first 17 px of pin). They stay visible through the
+    // pin-spacer gap between Act 4 and Act 5 because a5 only goes
+    // nonzero when the Act 5 pin engages — combined with scrub:1 on the
+    // pin trigger this gives a smooth ~150 ms fade as the user crosses
+    // into the Kitchen.
+    const fadeIn = MathUtils.smoothstep(a4, 0.5, 1.0);
+    const fadeOut = MathUtils.smoothstep(a5, 0.0, 0.005);
+    const fade = fadeIn * (1 - fadeOut);
     if (matRef.current) {
       matRef.current.uniforms.uTime.value = t;
       matRef.current.uniforms.uIntensity.value = fade;

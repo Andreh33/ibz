@@ -6,22 +6,33 @@ import { useEffect, useMemo, useRef } from 'react';
 import { Box3, type Group, MathUtils, Vector3 } from 'three';
 import { useDescentStore } from '@/lib/store/descent';
 
-const TURTLE_URL = '/models/tortuga.final.glb';
+const TURTLE_URL = '/models/tortuganueva.glb';
 useGLTF.preload(TURTLE_URL);
 
-// Turtle swims across viewport during Act 5 — kitchen + menu. Per CLAUDE.md
-// §3 Act 5: enters from the right, swims left across the screen in front of
-// the dish content. The GLB ships with a swimming animation we play via
-// drei's useAnimations.
+// Turtle swims across viewport during Act 5 — kitchen + menu. The crossing
+// is AUTONOMOUS (~6 s per pass), not scroll-bound — even if the user pauses,
+// the turtle keeps swimming. We only ENABLE the animation while Act 5 is
+// engaged (act5Progress > 0); outside that window the turtle parks off-
+// screen so it never bleeds into other acts.
 //
 // World coords:
-//   x: lerp(+10, -10, act5Progress)  — far right off-screen → far left off-screen
-//   y: -0.2 (slightly below the eye-line so the dishes can sit centred)
-//   z: 2 (in front of the editorial menu, behind the dish plates)
-// Rotation Y: π so the model faces left (the GLB's native forward is +Z).
-const TURTLE_TARGET_LENGTH = 3.2;
-const TURTLE_FROM_X = 10;
-const TURTLE_TO_X = -10;
+//   x: lerp(+10, -10) over CYCLE_SECONDS, then loops with a long off-screen
+//      pause so the turtle isn't constantly on screen
+//   y: -0.2 (slightly below the eye-line so dishes sit centred)
+//   z: 2 (in front of dish plates, behind editorial copy via the
+//      ForegroundCanvas z-30 layer)
+// Rotation Y: π so the model faces left.
+const TURTLE_TARGET_LENGTH = 4.5;
+const TURTLE_FROM_X = 8;
+const TURTLE_TO_X = -8;
+const CYCLE_SECONDS = 6;
+const PAUSE_SECONDS = 4; // off-screen pause before next pass
+
+// tortuganueva.glb is a self-contained Sketchfab export with proper
+// baseColorTexture + normalTexture linked into the single material — no
+// material override needed. The previous tortuga.final.glb required
+// per-name colour tints because its materials had no pbrMetallicRoughness
+// at all. With the new model we keep the imported PBR exactly as exported.
 
 export function Tortuga() {
   const turtle = useGLTF(TURTLE_URL);
@@ -39,6 +50,10 @@ export function Tortuga() {
     return { center, scale };
   }, [turtle.scene]);
 
+  // No material override on tortuganueva.glb — the imported PBR (with proper
+  // baseColorTexture + normalTexture) is what we want. Left as a no-op so
+  // the previous broken-model code path is documented in git history.
+
   // Play the bundled swim animation. Some Sketchfab exports name the clip
   // differently, so play whichever first action exists.
   useEffect(() => {
@@ -50,26 +65,42 @@ export function Tortuga() {
     };
   }, [actions, names]);
 
-  // X position scrubs with act5Progress; Y has a gentle bob + slight Z drift
-  // so the swim animation reads as "moving through water" rather than just
-  // sliding on a horizontal rail.
+  // Autonomous swim cycle: position x advances on real time, with a pause
+  // off-screen between passes so the turtle isn't always present. While the
+  // user is outside Act 5 (a5 = 0) we park it far off-screen.
   useFrame((state) => {
     if (!groupRef.current) return;
     const a5 = useDescentStore.getState().act5Progress;
     const t = state.clock.elapsedTime;
-    groupRef.current.position.x = MathUtils.lerp(TURTLE_FROM_X, TURTLE_TO_X, a5);
-    groupRef.current.position.y = -0.2 + Math.sin(t * 0.6) * 0.08;
-    groupRef.current.position.z = 2 + Math.sin(t * 0.4 + 1.0) * 0.15;
-    // Slight pitch as it strokes — looks more lifelike than a flat plane.
+    if (a5 < 0.01) {
+      groupRef.current.position.x = TURTLE_FROM_X + 5;
+      return;
+    }
+    const total = CYCLE_SECONDS + PAUSE_SECONDS;
+    const phase = t % total;
+    let x: number;
+    if (phase < CYCLE_SECONDS) {
+      const k = phase / CYCLE_SECONDS;
+      x = MathUtils.lerp(TURTLE_FROM_X, TURTLE_TO_X, k);
+    } else {
+      // Off-screen left during the pause, ready to re-enter from the right.
+      x = TURTLE_FROM_X + 5;
+    }
+    groupRef.current.position.x = x;
+    groupRef.current.position.y = 0 + Math.sin(t * 0.6) * 0.08;
+    groupRef.current.position.z = 4 + Math.sin(t * 0.4 + 1.0) * 0.15;
     groupRef.current.rotation.x = Math.sin(t * 0.6) * 0.06;
   });
 
+  // tortuganueva.glb native orientation (verified empirically): rest pose
+  // has head pointing +Y (up). Swim animation tilts forward along +Z, so
+  // the swimmer's "forward" is +Z in object space. To make the turtle
+  // swim right→left across the viewport with the head pointing -X, we
+  // rotate X = +π/2 first (tilt the upright pose down to horizontal,
+  // mapping +Y → +Z), then Y = -π/2 (rotate that horizontal +Z forward
+  // to -X). Three.js Euler order XYZ applies X rotation first.
   return (
-    <group
-      ref={groupRef}
-      // Native forward is +Z; rotate π to face -Z (left across the viewport).
-      rotation={[0, Math.PI, 0]}
-    >
+    <group ref={groupRef} rotation={[Math.PI / 2, -Math.PI / 2, 0]}>
       <group
         position={[
           -transform.center.x * transform.scale,

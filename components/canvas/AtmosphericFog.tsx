@@ -5,21 +5,20 @@ import { useMemo } from 'react';
 import { Color, FogExp2 } from 'three';
 import { useDescentStore } from '@/lib/store/descent';
 
-// Exponential fog whose colour interpolates with act4Progress so the
-// horizon-cut between the sky shader and the empty space below the camera
-// disappears, AND the underwater volume picks up a deep-turquoise tint that
-// makes the chain + light shafts feel surrounded by water rather than
-// hovering in a void. Density 0.012 is conservative — visually noticeable
-// at the horizon edge without obscuring the central scene.
+// Exponential fog gated by Act 4 progress so it ONLY kicks in once the
+// user begins crossing the water. During Acts 1–3 (a4 = 0) the density is 0
+// → no fog at all, and the cobalt sky reads cleanly. As a4 grows toward 1
+// (camera fully submerged) the density ramps up to MAX_DENSITY and the
+// colour shifts to deep turquoise, creating the sense of a real underwater
+// volume around the chain and the editorial copy.
 const ABOVE_WATER = new Color('#1B3A4B');
 const UNDERWATER = new Color('#0E2D3F');
-const FOG_DENSITY = 0.012;
+const MAX_DENSITY = 0.012;
 
 export function AtmosphericFog() {
   const { scene } = useThree();
-  const fog = useMemo(() => new FogExp2(ABOVE_WATER.getHex(), FOG_DENSITY), []);
+  const fog = useMemo(() => new FogExp2(ABOVE_WATER.getHex(), 0), []);
 
-  // Attach once on mount; we mutate fog.color per frame.
   useMemo(() => {
     scene.fog = fog;
   }, [scene, fog]);
@@ -27,6 +26,7 @@ export function AtmosphericFog() {
   useFrame(() => {
     const a4 = useDescentStore.getState().act4Progress;
     fog.color.copy(ABOVE_WATER).lerp(UNDERWATER, a4);
+    fog.density = MAX_DENSITY * a4;
   });
 
   return null;

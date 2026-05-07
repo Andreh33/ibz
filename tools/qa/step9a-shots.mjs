@@ -28,6 +28,12 @@ async function snap(label, scrollY) {
   await page.emulateMediaFeatures([
     { name: 'prefers-reduced-motion', value: 'no-preference' },
   ]);
+  page.on('console', (msg) => {
+    const text = msg.text();
+    if (text.includes('[disint]') || text.includes('[disintegration]')) {
+      console.log('  PAGE>', text);
+    }
+  });
   await page.goto(`http://localhost:3000/en`, {
     waitUntil: 'domcontentloaded',
     timeout: 60000,
@@ -51,6 +57,31 @@ async function snap(label, scrollY) {
   await page.close();
 }
 
+async function snapHold(label, scrollY, holdMs) {
+  const page = await browser.newPage();
+  await page.setViewport({ width: W, height: H, deviceScaleFactor: 1 });
+  await page.emulateMediaFeatures([
+    { name: 'prefers-reduced-motion', value: 'no-preference' },
+  ]);
+  await page.goto(`http://localhost:3000/en`, {
+    waitUntil: 'domcontentloaded',
+    timeout: 60000,
+  });
+  await new Promise((r) => setTimeout(r, 9000));
+  await page.addStyleTag({
+    content: `
+      .gsap-marker-start, .gsap-marker-end, .gsap-marker-scroller-start, .gsap-marker-scroller-end { display: none !important; }
+      [data-nextjs-toast], [data-nextjs-dialog], #__next-build-watcher,
+      nextjs-portal, [class*="__nextjs"] { display: none !important; }
+    `,
+  });
+  await page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), scrollY);
+  await new Promise((r) => setTimeout(r, holdMs));
+  await page.screenshot({ path: join(OUT, `${label}.png`) });
+  console.log(`  ${label}.png  held ${holdMs}ms`);
+  await page.close();
+}
+
 try {
   // Act 5 pin starts after Act 4 pin spacer ≈ scroll 6500. Pin distance
   // 4500 → Act 5 occupies scroll 6500 → 11000 with the tortuga + dishes
@@ -60,12 +91,16 @@ try {
   //   middle   — turtle silhouette mid-viewport, dish 3-4 visible (a5 ≈ 0.5)
   //   late     — turtle past centre, dishes 4-5 (a5 ≈ 0.75)
   //   end      — last plate centered, turtle exiting left (a5 ≈ 0.95)
-  const base = 7220; // Act 5 pin start (Act 4 spacer ends at ≈7217)
-  await snap('act5-01-intro', base + 100);
-  await snap('act5-02-second', base + 900);
-  await snap('act5-03-middle', base + 2100);
-  await snap('act5-04-late', base + 3300);
-  await snap('act5-05-end', base + 4350);
+  // Act 5 pin distance is now 3500 (5 dishes). Pin runs 7220 → 10720.
+  const base = 7220;
+  await snap('act5-01-intro', base + 50);     // a5 ≈ 0.014, header visible
+  await snap('act5-02-second', base + 700);   // a5 ≈ 0.20
+  await snap('act5-03-middle', base + 1750);  // a5 ≈ 0.50
+  await snap('act5-04-late', base + 2800);    // a5 ≈ 0.80
+  await snap('act5-05-end', base + 3400);     // a5 ≈ 0.97
+  // Extra frame at mid-act, holding longer so the autonomous turtle
+  // crosses through the viewport.
+  await snapHold('act5-06-tortuga', base + 1750, 4000);
 
   const tiles = ['act5-01-intro', 'act5-02-second', 'act5-03-middle', 'act5-04-late', 'act5-05-end'];
   const labels = [

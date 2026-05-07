@@ -42,16 +42,29 @@ export default async function HomePage({ params }: Props) {
               banner is fully gone before the pin releases. */}
           <DisintegrationTransition act1ProgressRange={[0.55, 0.95]}>
             <WordmarkReveal>
-              <h1 className="font-display text-[12vw] font-light leading-none tracking-[-0.02em] text-ivory drop-shadow-[0_2px_24px_rgba(4,16,29,0.35)]">
+              {/* Block-level h1 inherits text-center from the outer wrapper.
+                  The p uses mx-auto in addition to max-w-xl: max-width
+                  alone leaves the block left-aligned within contentRef
+                  (which is sized to the wordmark's wider content), so
+                  we must auto-center the block itself. The button sits
+                  in its own flex centring wrapper because inline-block
+                  buttons inherit text-align but don't always center
+                  consistently across browsers when nested in a relative
+                  parent. */}
+              <h1 className="text-center font-display text-[12vw] font-light leading-none tracking-[-0.02em] text-ivory drop-shadow-[0_2px_24px_rgba(4,16,29,0.35)]">
                 {t('home.wordmark')}
               </h1>
-              <p className="mt-6 max-w-xl font-display text-xl text-ivory/85">{t('home.tagline')}</p>
-              <button
-                type="button"
-                className="mt-10 rounded-full border border-ivory/30 bg-ivory/95 px-8 py-3 font-sans text-sm uppercase tracking-widest text-deep transition hover:bg-ivory"
-              >
-                {t('home.cta')}
-              </button>
+              <p className="mx-auto mt-6 max-w-xl text-center font-display text-xl text-ivory/85">
+                {t('home.tagline')}
+              </p>
+              <div className="mt-10 flex justify-center">
+                <button
+                  type="button"
+                  className="rounded-full border border-ivory/30 bg-ivory/95 px-8 py-3 font-sans text-sm uppercase tracking-widest text-deep shadow-[0_8px_24px_rgba(4,16,29,0.45)] transition hover:bg-ivory"
+                >
+                  {t('home.cta')}
+                </button>
+              </div>
             </WordmarkReveal>
           </DisintegrationTransition>
         </div>
@@ -59,13 +72,17 @@ export default async function HomePage({ params }: Props) {
       </Act1Trigger>
 
       {/* === ACT 2 — Heritage: 40 years + timeline + family quote === */}
-      <section className="relative flex min-h-[180vh] flex-col items-center justify-center px-6 py-32 text-center">
+      {/* Section sized 130vh + tighter gap-16 between editorial elements
+          packs the eyebrow / "40" / subtitle / timeline / quote stack into
+          a vertically balanced layout. Previous min-h-[180vh] + gap-24 left
+          the "40" sitting low in viewport with too much breathing room. */}
+      <section className="relative flex min-h-[130vh] flex-col items-center justify-center px-6 py-24 text-center">
         <DisintegrationTransition>
-          <div className="flex flex-col items-center gap-24">
+          <div className="flex flex-col items-center gap-16">
             <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/70">
               {t('heritage.eyebrow')}
             </p>
-            <h2 className="mt-6 font-display text-[clamp(180px,22vw,380px)] font-extralight leading-[0.85] tracking-[-0.04em] text-ivory drop-shadow-[0_2px_24px_rgba(4,16,29,0.4)]">
+            <h2 className="mt-6 font-display text-[clamp(180px,22vw,380px)] font-extralight leading-[0.85] tracking-[-0.04em] text-ivory">
               {t('heritage.headline')}
             </h2>
             <p className="mt-8 max-w-[24ch] font-display text-[clamp(28px,4vw,56px)] font-light leading-tight tracking-[-0.02em] text-ivory/85">
@@ -219,7 +236,7 @@ export default async function HomePage({ params }: Props) {
           the user reads them left-to-right while the page is locked. The
           underwater sky tint + caustics + god rays from Act 4 carry through
           unchanged — Act 5 is a continuation of the underwater world. */}
-      <Act5Trigger pinDistance={4500}>
+      <Act5Trigger pinDistance={3500}>
         <Act5Header
           eyebrow={t('act5.eyebrow')}
           headline={t('act5.headline')}

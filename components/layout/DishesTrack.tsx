@@ -107,8 +107,16 @@ export function DishesTrack() {
 
 function DishPlate({ dish, index }: { dish: Dish; index: number }) {
   // Each plate slowly rotates its inner ring and tilts 15° in perspective
-  // per spec. The active plate (closest to viewport centre) brightens
-  // slightly via a subtle scale + opacity bump driven by act5Progress.
+  // per spec. The active plate (closest to viewport centre) signals focus
+  // via a subtle scale bump driven by act5Progress.
+  //
+  // We deliberately do NOT modulate `opacity` on the wrapper: CSS opacity
+  // applies to the entire subtree including the dish photo, and because
+  // the SceneRoot canvas (anchor + chain at z-5) sits behind the dishes
+  // wrapper (z-20), translucent photos let the chain bleed through and
+  // ruin the editorial card look. If we ever want a focus dim again,
+  // TODO: layer a solid `bg-deep` overlay as a `::after` on the image
+  // wrapper with a variable opacity instead of fading the whole subtree.
   const ringRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -124,7 +132,6 @@ function DishPlate({ dish, index }: { dish: Dish; index: number }) {
       if (wrapperRef.current) {
         const scale = 0.88 + focus * 0.12;
         wrapperRef.current.style.transform = `perspective(1200px) rotateX(15deg) scale(${scale})`;
-        wrapperRef.current.style.opacity = String(0.55 + focus * 0.45);
       }
       raf = requestAnimationFrame(tick);
     };

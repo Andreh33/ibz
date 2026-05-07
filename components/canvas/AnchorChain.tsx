@@ -74,7 +74,8 @@ export function AnchorChain() {
   return (
     // CLAUDE.md §4: the anchor sits on the LEFT side of the viewport during the descent.
     // Anchor and chain share the same X/Z so the chain falls vertical onto the ring.
-    <group position={[-3, 0, 0]}>
+    // x=-4 keeps the shaft clear of the centred wordmark on a 1920px viewport.
+    <group position={[-4, 0, 0]}>
       <group
         position={[
           -anchorTransform.center.x * anchorTransform.scale,

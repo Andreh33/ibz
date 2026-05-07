@@ -1,6 +1,7 @@
 import { setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
-import { ScrollTriggerProbe } from '@/components/dev/ScrollTriggerProbe';
+import { Act1Trigger } from '@/components/layout/Act1Trigger';
+import { ScrollHint } from '@/components/layout/ScrollHint';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -11,31 +12,32 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <main>
-      <section className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
-        <p className="font-mono text-xs uppercase tracking-widest text-deep/50 mb-8">
-          {t('scaffold.stepLabel')} &middot; /{locale}
-        </p>
-        <h1 className="font-display text-[12vw] font-light leading-none tracking-[-0.02em]">
-          {t('home.wordmark')}
-        </h1>
-        <p className="mt-6 max-w-xl font-display text-xl text-sea/80">{t('home.tagline')}</p>
-        <button
-          type="button"
-          className="mt-10 rounded-full border border-sea bg-sea px-8 py-3 font-sans text-sm uppercase tracking-widest text-ivory transition hover:bg-deep"
-        >
-          {t('home.cta')}
-        </button>
-        <p className="mt-16 font-mono text-xs uppercase tracking-widest text-deep/40">
-          {t('home.scrollHint')} ↓
-        </p>
-      </section>
+      <Act1Trigger>
+        <div className="flex h-full w-full flex-col items-center justify-center px-6 text-center">
+          <h1 className="font-display text-[12vw] font-light leading-none tracking-[-0.02em] text-ivory drop-shadow-[0_2px_24px_rgba(4,16,29,0.35)]">
+            {t('home.wordmark')}
+          </h1>
+          <p className="mt-6 max-w-xl font-display text-xl text-ivory/85">{t('home.tagline')}</p>
+          <button
+            type="button"
+            className="mt-10 rounded-full border border-ivory/30 bg-ivory/95 px-8 py-3 font-sans text-sm uppercase tracking-widest text-deep transition hover:bg-ivory"
+          >
+            {t('home.cta')}
+          </button>
+        </div>
+        <ScrollHint />
+      </Act1Trigger>
 
-      <ScrollTriggerProbe label={t('scaffold.probeLabel')} />
-
-      <section className="min-h-screen bg-bone flex items-center justify-center">
-        <p className="font-mono text-xs uppercase tracking-widest text-deep/40">
-          end of scaffold &middot; canvas + descenso = paso 3
-        </p>
+      {/* Act 2 placeholder — real heritage content lands in step 6 */}
+      <section className="flex min-h-screen items-center justify-center bg-bone/40 px-6">
+        <div className="text-center">
+          <p className="font-mono text-xs uppercase tracking-widest text-deep/40 mb-4">
+            /{locale} &middot; act 2 placeholder
+          </p>
+          <h2 className="font-display text-5xl font-light tracking-[-0.02em] text-deep">
+            Heritage
+          </h2>
+        </div>
       </section>
     </main>
   );

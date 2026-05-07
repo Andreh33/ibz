@@ -2,15 +2,15 @@
 
 import { Environment } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { Suspense, useEffect, useRef, useState } from 'react';
-import { AnchorChain } from './AnchorChain';
-import { SceneLoader } from './SceneLoader';
-import { SkyEnvironment } from './SkyEnvironment';
+import { Suspense, useEffect, useState } from 'react';
+import { Boeing } from './Boeing';
 
-export function SceneRoot() {
+// Foreground 3D layer per CLAUDE.md §9 — z-30, sits ABOVE banner text (z-20)
+// and the background canvas (z-5). The Boeing in Act 1 and the turtle in Act 5
+// will live here. Pointer-events stay disabled so DOM clicks pass through.
+export function ForegroundCanvas() {
   const [hidden, setHidden] = useState(false);
   const [eventSource, setEventSource] = useState<HTMLElement | null>(null);
-  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setEventSource(document.body);
@@ -20,12 +20,7 @@ export function SceneRoot() {
   }, []);
 
   return (
-    <div
-      ref={wrapperRef}
-      aria-hidden
-      className="pointer-events-none fixed inset-0"
-      style={{ zIndex: 5 }}
-    >
+    <div aria-hidden className="pointer-events-none fixed inset-0" style={{ zIndex: 30 }}>
       <Canvas
         dpr={[1, 1.75]}
         frameloop={hidden ? 'demand' : 'always'}
@@ -34,17 +29,20 @@ export function SceneRoot() {
         eventSource={eventSource ?? undefined}
         eventPrefix="client"
       >
-        <SceneLoader />
-        <SkyEnvironment />
-        <ambientLight intensity={0.4} />
+        {/* Low ambient preserves PBR contrast — high ambient washes out the
+            baseColorTexture (Atlas Air livery). The HDRI Environment provides
+            directional ambient via image-based lighting, so we don't need much
+            artificial ambient on top. */}
+        <ambientLight intensity={0.25} />
         <directionalLight position={[5, 8, 5]} intensity={2.5} castShadow={false} />
-        {/* HDRI feeds PBR reflections only (background={false}); the procedural
-            <Sky> above paints the actual canvas background. */}
+        {/* Same sunset HDRI as the background canvas, kept off the visible
+            background ({background: false}) — the Sky shader in SceneRoot owns
+            the visible sky; this is purely for image-based lighting on Boeing. */}
         <Suspense fallback={null}>
           <Environment preset="sunset" background={false} />
         </Suspense>
         <Suspense fallback={null}>
-          <AnchorChain />
+          <Boeing />
         </Suspense>
       </Canvas>
     </div>

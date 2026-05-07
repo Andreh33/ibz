@@ -162,11 +162,13 @@ export default async function HomePage({ params }: Props) {
           }}
         />
 
-        {/* DisintegrationTransition wraps just the editorial banner (auto
-            sized) so the sentinel ScrollTrigger measures the actual visible
-            content. The 3-band layout is achieved with explicit margins
-            instead of an h-full → flex-1 chain so the contentRef can size
-            itself to the children naturally. */}
+        {/* DisintegrationTransition wraps just the editorial banner (header
+            + body + silhouette). The data-grid `<dl>` lives OUTSIDE so it
+            doesn't get caught in the dissolve: the section is 1400px and
+            the sentinel fires at top top+=25%, which means by the time
+            the `<dl>` enters the viewport the dissolve has already passed
+            zero and the stats would render half-disintegrated. Sibling
+            container with the same width keeps them visually aligned. */}
         <DisintegrationTransition>
           <div className="mx-auto w-full max-w-6xl">
             {/* Top band — eyebrow + headline */}
@@ -192,22 +194,25 @@ export default async function HomePage({ params }: Props) {
                 />
               </div>
             </div>
-
-            {/* Bottom band — data grid */}
-            <dl className="mt-24 grid grid-cols-1 gap-6 sm:mt-40 sm:grid-cols-3">
-              {(['locatedIn', 'coordinates', 'driving'] as const).map((key) => (
-                <div key={key} className="text-left">
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.25em] text-ivory/70">
-                    {t(`act3.${key}`)}
-                  </dt>
-                  <dd className="mt-1 font-sans text-sm text-ivory/95">
-                    {t(`act3.${key}Value` as 'locatedInValue' | 'coordinatesValue' | 'drivingValue')}
-                  </dd>
-                </div>
-              ))}
-            </dl>
           </div>
         </DisintegrationTransition>
+
+        {/* Bottom band — data grid. Lifted out of DisintegrationTransition
+            (see comment above) so it scrolls in solid and meets WCAG 2.2
+            AA contrast (spec §14): dt at ivory/80, dd at full ivory with
+            the same drop-shadow token used by the headline. */}
+        <dl className="mx-auto mt-24 grid w-full max-w-6xl grid-cols-1 gap-6 sm:mt-40 sm:grid-cols-3">
+          {(['locatedIn', 'coordinates', 'driving'] as const).map((key) => (
+            <div key={key} className="text-left">
+              <dt className="font-mono text-[10px] uppercase tracking-[0.25em] text-ivory/80">
+                {t(`act3.${key}`)}
+              </dt>
+              <dd className="mt-1 font-sans text-base text-ivory drop-shadow-[0_2px_18px_rgba(4,16,29,0.55)]">
+                {t(`act3.${key}Value` as 'locatedInValue' | 'coordinatesValue' | 'drivingValue')}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
       {/* === ACT 4 — Breaking the surface === */}

@@ -78,6 +78,7 @@ export const DISINTEGRATION_VERTEX = /* glsl */ `
 export const DISINTEGRATION_FRAGMENT = /* glsl */ `
   uniform sampler2D uTexture;
   uniform vec3 uGoldColor;
+  uniform float uTime;
 
   varying vec2 vUv;
   varying float vNoise;
@@ -86,7 +87,17 @@ export const DISINTEGRATION_FRAGMENT = /* glsl */ `
   ${SIMPLEX_2D}
 
   void main() {
-    vec4 tex = texture2D(uTexture, vUv);
+    // Liquid wobble — distort the texture sample as localProgress grows so the
+    // banner reads as melting before it fragments into dust. Wider waves (freq
+    // 22) read as "liquid" rather than "noise"; amplitude 0.045 makes the
+    // displacement clearly perceptible (>2× the original 0.02). Time multiplier
+    // 1.4 quickens the ripple so the eye registers the motion before particles
+    // dominate.
+    vec2 wobbleUv = vUv;
+    wobbleUv.x += sin(vUv.y * 22.0 + uTime * 1.4) * 0.045 * vLocalProgress;
+    wobbleUv.y += cos(vUv.x * 22.0 + uTime * 1.4) * 0.045 * vLocalProgress;
+
+    vec4 tex = texture2D(uTexture, wobbleUv);
 
     // Granular dissolve threshold — uv*40 gives near-pixel-level dust.
     float fineNoise = snoise(vUv * 40.0) * 0.5 + 0.5;

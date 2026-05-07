@@ -26,8 +26,20 @@
     }
   },
   "act3": {
-    "eyebrow": "Akt 3 (Platzhalter)",
-    "headline": "Die versteckte Bucht"
+    "eyebrow": "Die versteckte Bucht",
+    "headline": "Wo die Straße endet und das Meer beginnt",
+    "body": "Cala San Vicente liegt im äußersten Norden Ibizas, jenseits der letzten Kurve. Hier endet die Straße. Von der Restaurantterrasse öffnet sich die Bucht zum türkisfarbenen Wasser und den unberührten Klippen von Es Molí.",
+    "locatedIn": "Lage",
+    "locatedInValue": "Norden Ibizas",
+    "coordinates": "Koordinaten",
+    "coordinatesValue": "39°N 1°E",
+    "driving": "Von der Stadt",
+    "drivingValue": "35 Minuten",
+    "pinLabel": "Cala San Vicente"
+  },
+  "act4": {
+    "eyebrow": "Akt 4 (Platzhalter)",
+    "headline": "Durch die Oberfläche"
   },
   "scaffold": {
     "stepLabel": "Schritt 2 — Projekt-Scaffold",

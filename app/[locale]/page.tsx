@@ -1,6 +1,7 @@
 import { setRequestLocale } from 'next-intl/server';
 import { getTranslations } from 'next-intl/server';
 import { DisintegrationTransition } from '@/components/canvas/DisintegrationTransition';
+import { IbizaSilhouette } from '@/components/canvas/IbizaSilhouette';
 import { Act1Trigger } from '@/components/layout/Act1Trigger';
 import { ScrollHint } from '@/components/layout/ScrollHint';
 import { WordmarkReveal } from '@/components/layout/WordmarkReveal';
@@ -16,13 +17,22 @@ export default async function HomePage({ params }: Props) {
     <main>
       {/* === ACT 1 — Sky + Boeing crossing + scroll-locked pin === */}
       <Act1Trigger>
-        {/* Scroll positions hardcoded because GSAP doesn't auto-compensate
-            child triggers for the parent pin's spacer. Banner.docTop after pin
-            shift ≈ 1840; trigger fires when banner.top reaches viewport_top -
-            20%vh (scroll 1840), ends 500px later at 2340 while still partially
-            in viewport so the dissolve is visible. */}
-        <DisintegrationTransition startScroll={1840} endScroll={2340}>
-          <div className="flex h-full w-full flex-col items-center justify-center px-6 text-center">
+        {/* Centering wrapper lives OUTSIDE DisintegrationTransition so the
+            sentinel ScrollTrigger measures the actual banner content (the
+            wordmark + tagline + CTA), not the full-viewport flex container.
+            The DisintegrationTransition uses a sentinel ScrollTrigger
+            anchored to its own contentRef + a fixed-duration timeline:
+            no hardcoded scroll positions even with the parent pin spacer,
+            and the dissolve always plays for ~1s regardless of scroll
+            speed. */}
+        <div className="flex h-full w-full flex-col items-center justify-center px-6 text-center">
+          {/* Act 1 lives inside Act1Trigger's pin. Child ScrollTriggers
+              don't get pin-spacer compensation, so we drive the dissolve
+              from the pin's own progress instead, mapping pin progress
+              [0.55, 0.95] to dissolve progress [0, 1]. The user has read
+              the wordmark by 0.55; the dissolve completes by 0.95 so the
+              banner is fully gone before the pin releases. */}
+          <DisintegrationTransition act1ProgressRange={[0.55, 0.95]}>
             <WordmarkReveal>
               <h1 className="font-display text-[12vw] font-light leading-none tracking-[-0.02em] text-ivory drop-shadow-[0_2px_24px_rgba(4,16,29,0.35)]">
                 {t('home.wordmark')}
@@ -35,19 +45,14 @@ export default async function HomePage({ params }: Props) {
                 {t('home.cta')}
               </button>
             </WordmarkReveal>
-          </div>
-        </DisintegrationTransition>
+          </DisintegrationTransition>
+        </div>
         <ScrollHint />
       </Act1Trigger>
 
       {/* === ACT 2 — Heritage: 40 years + timeline + family quote === */}
-      {/* Hardcoded scroll positions: the section is 1944px (180vh) starting at
-          doc scroll 2580 (after Act 1 pin spacer). Content is centered around
-          doc 3552. Disintegration window 3500–4100 plays as the content is
-          exiting the top of the viewport — by then the user has read through
-          "40" + timeline + quote. */}
       <section className="relative flex min-h-[180vh] flex-col items-center justify-center px-6 py-32 text-center">
-        <DisintegrationTransition startScroll={3500} endScroll={4100}>
+        <DisintegrationTransition>
           <div className="flex flex-col items-center gap-24">
             <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/70">
               {t('heritage.eyebrow')}
@@ -94,14 +99,100 @@ export default async function HomePage({ params }: Props) {
         </DisintegrationTransition>
       </section>
 
-      {/* === ACT 3 placeholder === */}
+      {/* === ACT 3 — Hidden cove: location + Ibiza silhouette trace + pin === */}
+      {/* Body height bookkeeping — ACT 1 pin spacer ends at scroll 2580, ACT 2
+          (180vh) ends at 4524, ACT 3 (1400px fixed) ends at 5924. The SVG
+          trace runs 4500–4750 so the pin lands while the silhouette is still
+          mid-viewport. The disintegration is now sentinel-driven, no
+          hardcoded scrolls. */}
+      <section
+        className="relative flex flex-col px-6 py-24"
+        style={{ minHeight: '1400px' }}
+      >
+        {/* Decorative cloud — opposite side from the anchor column for balance.
+            Two overlapping ellipses give a soft cumulus shape; cloud-drift CSS
+            keyframes nudge it laterally over 60s. */}
+        <svg
+          aria-hidden
+          viewBox="0 0 200 80"
+          className="cloud-drift pointer-events-none absolute right-[8%] top-[18%] w-48 sm:w-72"
+          style={{ opacity: 0.5 }}
+        >
+          <g fill="#F5F0E6">
+            <ellipse cx="50" cy="50" rx="22" ry="14" />
+            <ellipse cx="80" cy="40" rx="28" ry="20" />
+            <ellipse cx="118" cy="48" rx="32" ry="22" />
+            <ellipse cx="150" cy="52" rx="22" ry="15" />
+          </g>
+        </svg>
+
+        {/* Horizon hint — bottom 15% bleeds toward a paler blue, signalling the
+            sea is approaching for Act 4. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[15%]"
+          style={{
+            background:
+              'linear-gradient(to bottom, transparent, rgba(180, 200, 220, 0.12))',
+          }}
+        />
+
+        {/* DisintegrationTransition wraps just the editorial banner (auto
+            sized) so the sentinel ScrollTrigger measures the actual visible
+            content. The 3-band layout is achieved with explicit margins
+            instead of an h-full → flex-1 chain so the contentRef can size
+            itself to the children naturally. */}
+        <DisintegrationTransition>
+          <div className="mx-auto w-full max-w-6xl">
+            {/* Top band — eyebrow + headline */}
+            <header className="max-w-3xl">
+              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ivory/95">
+                {t('act3.eyebrow')}
+              </p>
+              <h2 className="mt-6 font-display text-[clamp(40px,5.5vw,76px)] font-light leading-[1.05] tracking-[-0.02em] text-ivory drop-shadow-[0_2px_24px_rgba(4,16,29,0.4)]">
+                {t('act3.headline')}
+              </h2>
+            </header>
+
+            {/* Middle band — body left, silhouette right. */}
+            <div className="mt-16 grid grid-cols-12 items-center gap-x-8 gap-y-12 sm:mt-24">
+              <p className="col-span-12 max-w-[52ch] font-sans text-[17px] leading-[1.7] text-ivory/95 sm:col-span-7">
+                {t('act3.body')}
+              </p>
+              <div className="col-span-12 flex justify-center sm:col-span-5 sm:col-start-8 sm:justify-end">
+                <IbizaSilhouette
+                  startScroll={4500}
+                  endScroll={4750}
+                  pinLabel={t('act3.pinLabel')}
+                />
+              </div>
+            </div>
+
+            {/* Bottom band — data grid */}
+            <dl className="mt-24 grid grid-cols-1 gap-6 sm:mt-40 sm:grid-cols-3">
+              {(['locatedIn', 'coordinates', 'driving'] as const).map((key) => (
+                <div key={key} className="text-left">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.25em] text-ivory/70">
+                    {t(`act3.${key}`)}
+                  </dt>
+                  <dd className="mt-1 font-sans text-sm text-ivory/95">
+                    {t(`act3.${key}Value` as 'locatedInValue' | 'coordinatesValue' | 'drivingValue')}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </DisintegrationTransition>
+      </section>
+
+      {/* === ACT 4 placeholder === */}
       <section className="flex min-h-screen items-center justify-center px-6 text-center">
         <div>
           <p className="font-mono text-xs uppercase tracking-widest text-ivory/55 mb-4">
-            /{locale} &middot; {t('act3.eyebrow')}
+            /{locale} &middot; {t('act4.eyebrow')}
           </p>
           <h2 className="font-display text-5xl font-light tracking-[-0.02em] text-ivory">
-            {t('act3.headline')}
+            {t('act4.headline')}
           </h2>
         </div>
       </section>

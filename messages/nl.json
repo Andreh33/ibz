@@ -26,8 +26,20 @@
     }
   },
   "act3": {
-    "eyebrow": "Akte 3 (placeholder)",
-    "headline": "De verborgen baai"
+    "eyebrow": "De verborgen baai",
+    "headline": "Waar de weg ophoudt en de zee begint",
+    "body": "Cala San Vicente ligt in het uiterste noorden van Ibiza, voorbij de laatste haarspeldbocht. Hier eindigt de weg. Vanaf het terras van het restaurant opent de baai zich naar het turkooizen water en de ongerepte kliffen van Es Molí.",
+    "locatedIn": "Locatie",
+    "locatedInValue": "Noord-Ibiza",
+    "coordinates": "Coördinaten",
+    "coordinatesValue": "39°N 1°E",
+    "driving": "Vanaf de stad",
+    "drivingValue": "35 minuten",
+    "pinLabel": "Cala San Vicente"
+  },
+  "act4": {
+    "eyebrow": "Akte 4 (placeholder)",
+    "headline": "Door het oppervlak"
   },
   "scaffold": {
     "stepLabel": "Stap 2 — Project-scaffold",

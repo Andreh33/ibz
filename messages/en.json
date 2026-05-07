@@ -26,8 +26,20 @@
     }
   },
   "act3": {
-    "eyebrow": "Act 3 placeholder",
-    "headline": "The hidden cove"
+    "eyebrow": "The hidden cove",
+    "headline": "Where the road runs out and the sea begins",
+    "body": "Cala San Vicente sits in the far north of Ibiza, beyond the last switchback. The road ends here. From the restaurant terrace, the cove opens onto turquoise water and the cliffs of Es Moli, untouched.",
+    "locatedIn": "Located in",
+    "locatedInValue": "North of Ibiza",
+    "coordinates": "Coordinates",
+    "coordinatesValue": "39°N 1°E",
+    "driving": "Driving from city",
+    "drivingValue": "35 minutes",
+    "pinLabel": "Cala San Vicente"
+  },
+  "act4": {
+    "eyebrow": "Act 4 placeholder",
+    "headline": "Breaking the surface"
   },
   "scaffold": {
     "stepLabel": "Step 2 — Project scaffold",

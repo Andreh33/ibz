@@ -38,3 +38,27 @@
     letter-spacing: var(--tracking-display);
   }
 }
+
+/* Pulsing pin used by IbizaSilhouette (Act 3) and reusable for any future
+   "you are here" markers on coastline traces. transform-box: fill-box anchors
+   the scale to the SVG element's own bbox center rather than the SVG root. */
+@keyframes pulse-pin {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.35); }
+}
+.pulse-pin {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: pulse-pin 2.5s ease-in-out infinite;
+}
+
+/* Slow cloud drift used in Act 3 for atmospheric depth (opposite side of the
+   anchor column). Long duration + ease-in-out keeps the motion barely
+   perceptible. */
+@keyframes cloud-drift {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-60px); }
+}
+.cloud-drift {
+  animation: cloud-drift 60s ease-in-out infinite;
+}

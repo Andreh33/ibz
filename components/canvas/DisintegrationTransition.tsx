@@ -14,6 +14,7 @@ import {
   type Texture,
 } from 'three';
 import { DISINTEGRATION_FRAGMENT, DISINTEGRATION_VERTEX } from '@/lib/shaders/disintegration';
+import { useDescentStore } from '@/lib/store/descent';
 import { usePreloaderStore } from '@/lib/store/preloader';
 
 if (typeof window !== 'undefined') {
@@ -22,43 +23,52 @@ if (typeof window !== 'undefined') {
 
 type Props = {
   children: ReactNode;
-  /** GSAP ScrollTrigger start string. Defaults to the spec value. */
-  triggerStart?: string;
-  /** Scroll distance in px over which the dissolve plays from progress 0 → 1. */
-  scrollDistance?: number;
   /** Hex color for the disintegrating particles. */
   particleColor?: string;
   /** Max upward drift in pixels at progress 1. */
   yDrift?: number;
   /** Max horizontal jitter in pixels at progress 1. */
   xJitter?: number;
-  /** Optional CSS selector for the trigger element. Defaults to this component's
-   *  own container. */
-  triggerSelector?: string;
-  /** Absolute scroll position (px) where progress=0. Use this when the children
-   *  live inside a pinned ScrollTrigger parent — child triggers don't get
-   *  automatic pin-spacing compensation, so pass a hardcoded position. */
-  startScroll?: number;
-  /** Absolute scroll position (px) where progress=1. */
-  endScroll?: number;
+  /** Damp smoothing factor: lower = slower catch-up = longer perceptible
+   *  animation when the user scrolls fast. With 4.0 the progress takes
+   *  ~250ms to converge, with 2.5 ~400ms. Default 3.0 gives a reliable
+   *  ~330ms perception window even at 5000 px/s wheel speeds. */
+  dampSmoothing?: number;
+  /** ScrollTrigger start position (banner-relative). Default fires when the
+   *  top of the banner is 25% into the viewport from the top — banner is
+   *  clearly visible by the time the dissolve starts. */
+  triggerStart?: string;
+  /** ScrollTrigger end position. Default ends when the bottom of the banner
+   *  is 10% above the viewport top (banner mostly scrolled past). */
+  triggerEnd?: string;
+  /** When set, skip ScrollTrigger and drive progress from Act 1 pin's
+   *  descent store progress mapped from [from, to] to [0, 1]. Used for
+   *  banners inside the Act1Trigger pin where child ScrollTriggers don't
+   *  get pin-spacer compensation. */
+  act1ProgressRange?: [number, number];
 };
 
 const REDUCED_MOTION_TRANSLATE = 12;
 
 export function DisintegrationTransition({
   children,
-  triggerStart = 'top top-=20%',
-  scrollDistance = 600,
   particleColor = '#C9A86B',
   yDrift = 320,
   xJitter = 70,
-  triggerSelector,
-  startScroll,
-  endScroll,
+  dampSmoothing = 3.0,
+  triggerStart = 'top top+=25%',
+  triggerEnd = 'bottom top+=10%',
+  act1ProgressRange,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  // progressRef.current is the SMOOTHED, render-side progress that drives
+  // the shader. progressTargetRef.current is the raw scroll-driven target
+  // updated by ScrollTrigger / descent-store subscribers. useFrame eases
+  // current toward target each frame so the dissolve always reads as a
+  // ~300ms animation even when the user wheels through the trigger zone.
   const progressRef = useRef(0);
+  const progressTargetRef = useRef(0);
   const [texture, setTexture] = useState<Texture | null>(null);
   const [bounds, setBounds] = useState<{ width: number; height: number } | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -146,71 +156,143 @@ export function DisintegrationTransition({
     };
   }, [reducedMotion]);
 
-  // ScrollTrigger drives progress + DOM visibility. Direct style mutation (no
-  // React state) so the visibility flip is instant and synchronous with scroll.
+  // Sentinel ScrollTrigger drives a TARGET progress; useFrame damps the
+  // render-side progress toward it so even fast wheel-flicks produce a
+  // visible animation duration. Two crucial differences from the original
+  // scrub-only code:
+  //   1. The trigger is the contentRef itself (sentinel), so adding/removing
+  //      content above it doesn't break the trigger window — no hardcoded
+  //      scroll positions to maintain.
+  //   2. The progress is DAMPED in useFrame, decoupling perception from
+  //      scroll velocity: even if scroll skips the trigger zone in 50ms,
+  //      the visible dissolve plays out over the damp constant (~300ms).
   //
-  // Deferred to rAF: React runs child useEffects BEFORE parent useEffects, so
-  // the parent Act1Trigger pin isn't registered yet when this effect fires
-  // synchronously. We need the parent's pin to exist first so ScrollTrigger
-  // accounts for the pin spacer when computing this trigger's start/end.
+  // For Act 1 (inside the pinned Act1Trigger), child ScrollTriggers fire
+  // mid-pin because their scroll position is reached during pin scrub. We
+  // bypass that with the act1ProgressRange path, which subscribes to the
+  // descent store's pin progress directly.
   useEffect(() => {
-    if (!containerRef.current) return;
-    const triggerEl = triggerSelector
-      ? (document.querySelector(triggerSelector) as HTMLElement | null)
-      : containerRef.current;
-    if (!triggerEl) return;
+    if (!contentRef.current) return;
+    if (reducedMotion) return;
 
+    // Path A — Act 1 pin progress mapped to dissolve progress.
+    if (act1ProgressRange) {
+      const [from, to] = act1ProgressRange;
+      const apply = (act1: number) => {
+        const t = (act1 - from) / (to - from);
+        progressTargetRef.current = Math.max(0, Math.min(1, t));
+      };
+      apply(useDescentStore.getState().act1Progress);
+      const unsub = useDescentStore.subscribe((s) => apply(s.act1Progress));
+      return () => {
+        unsub();
+      };
+    }
+
+    // Path B — sentinel ScrollTrigger for non-pinned banners.
     let trigger: ScrollTrigger | undefined;
+    // Two rAFs: child useEffects run before parent's, so we wait one frame
+    // for parent ScrollTriggers to register and another for refresh to
+    // settle, then create our trigger with positions in the post-pin layout.
     const rafId = window.requestAnimationFrame(() => {
-      const useAbsolute =
-        typeof startScroll === 'number' && typeof endScroll === 'number';
-      trigger = ScrollTrigger.create({
-        ...(useAbsolute
-          ? { start: startScroll, end: endScroll }
-          : {
-              trigger: triggerEl,
-              start: triggerStart,
-              end: `${triggerStart}+=${scrollDistance}`,
-            }),
-        scrub: 1,
-        markers: process.env.NODE_ENV !== 'production',
-        id: 'disint',
-        onUpdate: (self) => {
-          progressRef.current = self.progress;
-          if (contentRef.current && !reducedMotion) {
-            contentRef.current.style.visibility =
-              self.progress > 0.005 ? 'hidden' : 'visible';
-          }
-          if (reducedMotion && contentRef.current) {
-            contentRef.current.style.opacity = String(1 - self.progress);
-            contentRef.current.style.transform = `translateY(${-REDUCED_MOTION_TRANSLATE * self.progress}px)`;
-          }
-        },
+      window.requestAnimationFrame(() => {
+        trigger = ScrollTrigger.create({
+          trigger: contentRef.current!,
+          start: triggerStart,
+          end: triggerEnd,
+          scrub: true,
+          markers: process.env.NODE_ENV !== 'production',
+          id: 'disint',
+          onUpdate: (self) => {
+            progressTargetRef.current = self.progress;
+          },
+        });
+        if (process.env.NODE_ENV !== 'production' && trigger) {
+          // biome-ignore lint/suspicious/noConsole: debug only in dev
+          console.log(`[disint] registered start=${trigger.start} end=${trigger.end}`);
+        }
       });
-      ScrollTrigger.refresh();
-      if (process.env.NODE_ENV !== 'production' && trigger) {
-        // biome-ignore lint/suspicious/noConsole: debug only in dev
-        console.log(`[disint] start=${trigger.start} end=${trigger.end}`);
-      }
     });
 
     return () => {
       window.cancelAnimationFrame(rafId);
       trigger?.kill();
     };
-  }, [triggerStart, scrollDistance, reducedMotion, triggerSelector, startScroll, endScroll]);
+  }, [triggerStart, triggerEnd, reducedMotion, act1ProgressRange]);
+
+  // Damp loop: drive the smoothed progressRef toward the scroll-side target.
+  // Synced with GSAP's ticker so it cooperates with Lenis. The DOM banner's
+  // visibility flips when smoothed progress crosses the perceptible
+  // threshold, eliminating the double-render flash where both the live
+  // banner and the texture overlay would briefly show.
+  useEffect(() => {
+    if (reducedMotion) return;
+    let prevTime = performance.now();
+    const tick = () => {
+      const now = performance.now();
+      const dt = Math.min(0.1, (now - prevTime) / 1000);
+      prevTime = now;
+      const target = progressTargetRef.current;
+      const current = progressRef.current;
+      // Exponential damp: the higher dampSmoothing, the faster the catch-up.
+      // Equivalent to: x += (target - x) * (1 - exp(-k*dt))
+      const k = dampSmoothing;
+      const next = current + (target - current) * (1 - Math.exp(-k * dt));
+      progressRef.current = next;
+      if (contentRef.current) {
+        contentRef.current.style.visibility = next > 0.02 ? 'hidden' : 'visible';
+      }
+    };
+    gsap.ticker.add(tick);
+    return () => {
+      gsap.ticker.remove(tick);
+    };
+  }, [dampSmoothing, reducedMotion]);
+
+  // Reduced-motion fallback: simple opacity + translate scrub tied to the
+  // contentRef's own ScrollTrigger position. No WebGL.
+  useEffect(() => {
+    if (!reducedMotion || !contentRef.current) return;
+    let trigger: ScrollTrigger | undefined;
+    const rafId = window.requestAnimationFrame(() => {
+      trigger = ScrollTrigger.create({
+        trigger: contentRef.current!,
+        start: 'top top+=25%',
+        end: 'bottom top+=10%',
+        scrub: 1,
+        onUpdate: (self) => {
+          if (!contentRef.current) return;
+          contentRef.current.style.opacity = String(1 - self.progress);
+          contentRef.current.style.transform = `translateY(${-REDUCED_MOTION_TRANSLATE * self.progress}px)`;
+        },
+      });
+    });
+    return () => {
+      window.cancelAnimationFrame(rafId);
+      trigger?.kill();
+    };
+  }, [reducedMotion]);
 
   return (
-    <div ref={containerRef} className="relative h-full w-full">
+    <div ref={containerRef} className="relative">
+      {/* contentRef now sizes to its children (no h-full) so the
+          ScrollTrigger sentinel measures the actual visible banner geometry,
+          not the full section. Parent components are responsible for any
+          full-section centering wrappers. */}
       <div
         ref={contentRef}
-        className="relative h-full w-full"
+        className="relative"
         style={
           reducedMotion ? { transition: 'opacity 0.6s ease-out, transform 0.6s ease-out' } : undefined
         }
       >
         {children}
       </div>
+      {/* Overlay is mounted as soon as the texture is ready and stays mounted
+          for the page's lifetime so the WebGL context + shader program are
+          ready BEFORE the first trigger fires. The mesh hides itself when
+          smoothed progress is outside (0.02, 0.99), so an idle overlay
+          costs only a transparent quad. */}
       {!reducedMotion && texture && bounds && (
         <DisintegrationOverlay
           texture={texture}
@@ -240,13 +322,30 @@ function DisintegrationOverlay({
   yDrift: number;
   xJitter: number;
 }) {
+  // Inline overlay positioned absolute over the banner. The Canvas is sized
+  // to the contentRef bounds so the orthographic camera maps 1 world unit
+  // to 1 CSS pixel. Inline rendering avoids React-portal-into-transformed-
+  // ancestor edge cases that the Act 1 pin introduces — the overlay simply
+  // lives alongside contentRef and scrolls with the section. The damp loop
+  // in the parent ensures the dissolve plays for ~330ms regardless of
+  // scroll velocity, so the user always perceives the animation even when
+  // wheeling fast.
   return (
     <div
       aria-hidden
       className="pointer-events-none absolute inset-0"
-      style={{ zIndex: 25 }} // between banner z-20 and foreground 3D z-30
+      style={{
+        // Above the ForegroundCanvas (z-30) so the dissolve isn't occluded
+        // by the foreground 3D layer's WebGL canvas. The mesh inside hides
+        // itself when idle, so an inactive overlay is invisible regardless.
+        zIndex: 35,
+      }}
     >
-      <Canvas orthographic camera={{ position: [0, 0, 1], near: 0, far: 10 }} gl={{ alpha: true }}>
+      <Canvas
+        orthographic
+        camera={{ position: [0, 0, 1], zoom: 1, near: 0, far: 10 }}
+        gl={{ alpha: true, antialias: true }}
+      >
         <DisintegrationMesh
           texture={texture}
           bounds={bounds}
@@ -284,11 +383,14 @@ function DisintegrationMesh({
     const u = matRef.current.uniforms;
     if (u.uProgress) u.uProgress.value = p;
     if (u.uTime) u.uTime.value = state.clock.elapsedTime;
-    meshRef.current.visible = p > 0.005 && p < 0.995;
+    // Hide outside the perceptible band: below 0.02 the dissolve is
+    // indistinguishable from the live DOM banner; above 0.99 the alpha
+    // decay has already discarded everything.
+    meshRef.current.visible = p > 0.02 && p < 0.99;
   });
 
   return (
-    <mesh ref={meshRef} visible={false}>
+    <mesh ref={meshRef} visible>
       <planeGeometry args={[bounds.width, bounds.height, 256, 256]} />
       <shaderMaterial
         ref={matRef}
@@ -296,6 +398,7 @@ function DisintegrationMesh({
         fragmentShader={DISINTEGRATION_FRAGMENT}
         transparent
         depthWrite={false}
+        depthTest={false}
         uniforms={{
           uTexture: { value: texture },
           uProgress: { value: 0 },

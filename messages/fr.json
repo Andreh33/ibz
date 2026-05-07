@@ -26,8 +26,20 @@
     }
   },
   "act3": {
-    "eyebrow": "Acte 3 (placeholder)",
-    "headline": "La crique cachée"
+    "eyebrow": "La crique cachée",
+    "headline": "Là où la route s'arrête et la mer commence",
+    "body": "Cala San Vicente se trouve à l'extrême nord d'Ibiza, au-delà du dernier virage. La route s'arrête ici. Depuis la terrasse du restaurant, la crique s'ouvre sur l'eau turquoise et les falaises intactes d'Es Molí.",
+    "locatedIn": "Situé",
+    "locatedInValue": "Nord d'Ibiza",
+    "coordinates": "Coordonnées",
+    "coordinatesValue": "39°N 1°E",
+    "driving": "Depuis la ville",
+    "drivingValue": "35 minutes",
+    "pinLabel": "Cala San Vicente"
+  },
+  "act4": {
+    "eyebrow": "Acte 4 (placeholder)",
+    "headline": "Franchir la surface"
   },
   "scaffold": {
     "stepLabel": "Étape 2 — Squelette du projet",

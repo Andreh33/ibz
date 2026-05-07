@@ -26,8 +26,20 @@
     }
   },
   "act3": {
-    "eyebrow": "Acto 3 (placeholder)",
-    "headline": "La cala escondida"
+    "eyebrow": "La cala escondida",
+    "headline": "Donde acaba la carretera y empieza el mar",
+    "body": "Cala San Vicente está en el extremo norte de Ibiza, más allá de la última curva. Aquí termina la carretera. Desde la terraza del restaurante la cala se abre al agua turquesa y a los acantilados de Es Molí, intactos.",
+    "locatedIn": "Ubicación",
+    "locatedInValue": "Norte de Ibiza",
+    "coordinates": "Coordenadas",
+    "coordinatesValue": "39°N 1°E",
+    "driving": "Desde la ciudad",
+    "drivingValue": "35 minutos",
+    "pinLabel": "Cala San Vicente"
+  },
+  "act4": {
+    "eyebrow": "Acto 4 (placeholder)",
+    "headline": "Cruzando la superficie"
   },
   "scaffold": {
     "stepLabel": "Paso 2 — Scaffold del proyecto",

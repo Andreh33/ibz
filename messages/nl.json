@@ -42,6 +42,11 @@
     "headline": "Waar verhalen tot rust komen en de tafel wacht",
     "body": "Onze kaart, onze keuken, ons thuis — je bent aangekomen."
   },
+  "act5": {
+    "eyebrow": "De keuken",
+    "headline": "Zes gerechten die onze tafel hebben gevormd",
+    "intro": "Gevangen in onze baai, gekweekt op onze boerderij, met de hand afgewerkt. Scroll door de borden."
+  },
   "scaffold": {
     "stepLabel": "Stap 2 — Project-scaffold",
     "probeLabel": "ScrollTrigger-test — verschijnt op 75% van het viewport"

@@ -4,11 +4,9 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   AdditiveBlending,
-  type BufferGeometry,
   Color,
-  type InstancedMesh,
   MathUtils,
-  Object3D,
+  type Object3D,
   type ShaderMaterial,
 } from 'three';
 import { useDescentStore } from '@/lib/store/descent';
@@ -132,69 +130,6 @@ function Ray({ cfg }: { cfg: RayConfig }) {
   );
 }
 
-// Suspended particles — small white dots drifting slowly upward + lateral
-// sway so the underwater volume reads as a real medium rather than a flat
-// painted backdrop. 40 instances, varied scales, varied Z so the ray light
-// can rake across them and give a depth cue.
-const PARTICLE_COUNT = 40;
-
-type ParticleSeed = {
-  x: number;
-  y: number;
-  z: number;
-  scale: number;
-  speed: number;
-  phase: number;
-};
-
-function Particles() {
-  const meshRef = useRef<InstancedMesh>(null);
-  const dummy = useMemo(() => new Object3D(), []);
-  const seeds = useMemo<ParticleSeed[]>(() => {
-    const arr: ParticleSeed[] = [];
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      arr.push({
-        x: (Math.random() - 0.5) * 3.4,
-        y: -0.6 + Math.random() * 1.6,
-        z: -0.8 + Math.random() * 1.2,
-        scale: 0.02 + Math.random() * 0.04,
-        speed: 0.04 + Math.random() * 0.06,
-        phase: Math.random() * Math.PI * 2,
-      });
-    }
-    return arr;
-  }, []);
-
-  useFrame((state) => {
-    if (!meshRef.current) return;
-    const t = state.clock.elapsedTime;
-    const a4 = useDescentStore.getState().act4Progress;
-    // Particles only meaningful underwater.
-    const fade = Math.max(0, Math.min(1, (a4 - 0.55) / 0.45));
-    meshRef.current.visible = fade > 0.01;
-    for (let i = 0; i < seeds.length; i++) {
-      const s = seeds[i];
-      // Slow upward drift with per-particle wrap so the column stays
-      // populated even after several seconds.
-      const drift = (t * s.speed) % 2.0;
-      const y = s.y + drift - 1.0;
-      const x = s.x + Math.sin(t * 0.3 + s.phase) * 0.05;
-      dummy.position.set(x, y, s.z);
-      dummy.scale.setScalar(s.scale * fade);
-      dummy.updateMatrix();
-      meshRef.current.setMatrixAt(i, dummy.matrix);
-    }
-    meshRef.current.instanceMatrix.needsUpdate = true;
-  });
-
-  return (
-    <instancedMesh ref={meshRef} args={[undefined as unknown as BufferGeometry, undefined, PARTICLE_COUNT]}>
-      <sphereGeometry args={[1, 6, 6]} />
-      <meshBasicMaterial color="#F0F8FF" transparent opacity={0.4} depthWrite={false} />
-    </instancedMesh>
-  );
-}
-
 export function GodRaysCanvas() {
   const [hidden, setHidden] = useState(false);
   useEffect(() => {
@@ -223,7 +158,6 @@ export function GodRaysCanvas() {
         {RAYS.map((cfg, i) => (
           <Ray key={i} cfg={cfg} />
         ))}
-        <Particles />
       </Canvas>
     </div>
   );

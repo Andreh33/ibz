@@ -42,6 +42,11 @@
     "headline": "Donde las historias reposan y la mesa espera",
     "body": "Nuestra carta, nuestra cocina, nuestra casa — has llegado."
   },
+  "act5": {
+    "eyebrow": "La cocina",
+    "headline": "Seis platos que construyeron nuestra mesa",
+    "intro": "Pescado en nuestra cala, criado en nuestra finca, terminado a mano. Desliza los platos."
+  },
   "scaffold": {
     "stepLabel": "Paso 2 — Scaffold del proyecto",
     "probeLabel": "Sonda de ScrollTrigger — aparece al 75% del viewport"

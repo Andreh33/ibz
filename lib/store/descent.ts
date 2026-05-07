@@ -14,6 +14,12 @@ type DescentState = {
   // submerged (turquoise environment).
   act4Progress: number;
   setAct4Progress: (n: number) => void;
+  // act5Progress drives the kitchen-and-menu swim-across: turtle x position,
+  // dish-plate horizontal scroll, sourcing-map line draw. 0 = turtle off-
+  // screen right + first dish centred, 1 = turtle exited left + last dish
+  // centred.
+  act5Progress: number;
+  setAct5Progress: (n: number) => void;
 };
 
 export const useDescentStore = create<DescentState>((set) => ({
@@ -21,4 +27,6 @@ export const useDescentStore = create<DescentState>((set) => ({
   setAct1Progress: (act1Progress) => set({ act1Progress }),
   act4Progress: 0,
   setAct4Progress: (act4Progress) => set({ act4Progress }),
+  act5Progress: 0,
+  setAct5Progress: (act5Progress) => set({ act5Progress }),
 }));

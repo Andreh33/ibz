@@ -42,6 +42,11 @@
     "headline": "Wo die Geschichten ruhen und der Tisch wartet",
     "body": "Unsere Karte, unsere Küche, unser Zuhause — Sie sind angekommen."
   },
+  "act5": {
+    "eyebrow": "Die Küche",
+    "headline": "Sechs Gerichte, die unseren Tisch geschaffen haben",
+    "intro": "Aus unserer Bucht gefischt, auf unserem Hof gezogen, von Hand vollendet. Scrollen Sie durch die Teller."
+  },
   "scaffold": {
     "stepLabel": "Schritt 2 — Projekt-Scaffold",
     "probeLabel": "ScrollTrigger-Test — blendet bei 75% des Viewports ein"

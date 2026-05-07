@@ -42,6 +42,11 @@
     "headline": "Là où les histoires se posent et la table attend",
     "body": "Notre carte, notre cuisine, notre maison — vous êtes arrivés."
   },
+  "act5": {
+    "eyebrow": "La cuisine",
+    "headline": "Six plats qui ont bâti notre table",
+    "intro": "Pêché dans notre crique, élevé dans notre ferme, fini à la main. Parcourez les assiettes."
+  },
   "scaffold": {
     "stepLabel": "Étape 2 — Squelette du projet",
     "probeLabel": "Sonde ScrollTrigger — apparaît à 75% du viewport"

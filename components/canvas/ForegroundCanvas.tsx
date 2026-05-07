@@ -3,6 +3,7 @@
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useEffect, useState } from 'react';
 import { Boeing } from './Boeing';
+import { Tortuga } from './Tortuga';
 
 // Foreground 3D layer per CLAUDE.md §9 — z-30, sits ABOVE banner text (z-20)
 // and the background canvas (z-5). The Boeing in Act 1 and the turtle in Act 5
@@ -51,6 +52,9 @@ export function ForegroundCanvas() {
         />
         <Suspense fallback={null}>
           <Boeing />
+        </Suspense>
+        <Suspense fallback={null}>
+          <Tortuga />
         </Suspense>
       </Canvas>
     </div>

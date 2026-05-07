@@ -4,6 +4,7 @@ import { Environment } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { AnchorChain } from './AnchorChain';
+import { AtmosphericFog } from './AtmosphericFog';
 import { SceneLoader } from './SceneLoader';
 import { SkyEnvironment } from './SkyEnvironment';
 import { WaterPlane } from './WaterPlane';
@@ -37,6 +38,7 @@ export function SceneRoot() {
       >
         <SceneLoader />
         <SkyEnvironment />
+        <AtmosphericFog />
         <ambientLight intensity={0.4} />
         <directionalLight position={[5, 8, 5]} intensity={2.5} castShadow={false} />
         {/* HDRI feeds PBR reflections only (background={false}); the procedural

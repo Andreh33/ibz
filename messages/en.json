@@ -42,6 +42,11 @@
     "headline": "Where stories settle and the table waits",
     "body": "Our menu, our kitchen, our home — you've arrived."
   },
+  "act5": {
+    "eyebrow": "The kitchen",
+    "headline": "Six dishes that built our table",
+    "intro": "Caught at our cove, raised on our farm, finished by hand. Scroll the plates."
+  },
   "scaffold": {
     "stepLabel": "Step 2 — Project scaffold",
     "probeLabel": "ScrollTrigger probe — fades in at 75% viewport"

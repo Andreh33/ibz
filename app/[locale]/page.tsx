@@ -7,6 +7,9 @@ import { GodRaysCanvas } from '@/components/canvas/GodRaysCanvas';
 import { Act1Trigger } from '@/components/layout/Act1Trigger';
 import { Act4Banner } from '@/components/layout/Act4Banner';
 import { Act4Trigger } from '@/components/layout/Act4Trigger';
+import { Act5Header } from '@/components/layout/Act5Header';
+import { Act5Trigger } from '@/components/layout/Act5Trigger';
+import { DishesTrack } from '@/components/layout/DishesTrack';
 import { ScrollHint } from '@/components/layout/ScrollHint';
 import { WaterCrossFlash } from '@/components/layout/WaterCrossFlash';
 import { WordmarkReveal } from '@/components/layout/WordmarkReveal';
@@ -209,6 +212,21 @@ export default async function HomePage({ params }: Props) {
           </p>
         </Act4Banner>
       </Act4Trigger>
+
+      {/* === ACT 5 — Kitchen + tortuga + dishes carousel === */}
+      {/* Pinned section. Tortuga (in ForegroundCanvas) sweeps R→L scrubbing
+          act5Progress. The DishesTrack horizontally translates 6 plates so
+          the user reads them left-to-right while the page is locked. The
+          underwater sky tint + caustics + god rays from Act 4 carry through
+          unchanged — Act 5 is a continuation of the underwater world. */}
+      <Act5Trigger pinDistance={4500}>
+        <Act5Header
+          eyebrow={t('act5.eyebrow')}
+          headline={t('act5.headline')}
+          intro={t('act5.intro')}
+        />
+        <DishesTrack />
+      </Act5Trigger>
 
       {/* Page-level overlays scrubbed by act4Progress. Live at the root of
           <main> so they sit above the BackgroundCanvas (z-5) but cooperate

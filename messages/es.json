@@ -47,6 +47,103 @@
     "headline": "Moderna, orgánica, hiperlocal",
     "intro": "Cinco platos firma del Mediterráneo y más allá, preparados con producto de nuestra finca km 0 y socios de confianza en España e Italia."
   },
+  "act6": {
+    "eyebrow": "Sobre el agua",
+    "headline": "Ancla tu barco — bajamos hasta la cala",
+    "body": "Capitanes, navegad. Echad el ancla en Cala San Vicente, llamadnos por VHF o WhatsApp, y nuestro skiff os lleva la mesa. Comida, copas, paella para toda la tripulación — servido en cubierta o en la arena.",
+    "ctaCatering": "Reservar catering",
+    "ctaTable": "Reservar mesa"
+  },
+  "act7": {
+    "eyebrow": "Donde reposa cada historia",
+    "headline": "Te guardamos la mesa",
+    "body": "Llegues en coche, en barco o en un paseo largo y perezoso por los acantilados — estaremos en la esquina del deck, viendo cómo la cala pasa de turquesa a oro. Bienvenido a casa.",
+    "address": "Calle del Caló 12, Cala San Vicente, Eivissa",
+    "ctaReserve": "Reservar mesa",
+    "ctaDirections": "Cómo llegar"
+  },
+  "menu": {
+    "eyebrow": "La carta",
+    "headline": "Platos nacidos del lugar",
+    "intro": "Seis pequeños capítulos editoriales — tapas, entrantes, principales, ensaladas, postres, bebidas. Hiperlocal cuando podemos, sourcing intencionado en lo demás.",
+    "sections": {
+      "tapas": "Tapas",
+      "starters": "Entrantes",
+      "mains": "Principales",
+      "salads": "Ensaladas",
+      "desserts": "Postres",
+      "drinks": "Bebidas"
+    },
+    "callout": {
+      "label": "Reservar",
+      "title": "Las mesas vuelan en temporada",
+      "body": "Aceptamos reservas de 12:30 a 23:00. Para grupos de más de seis, contáctanos directamente para preparar la esquina adecuada del deck.",
+      "cta": "Reservar mesa"
+    }
+  },
+  "about": {
+    "eyebrow": "La familia Zandwijk",
+    "headline": "Cuarenta años de curiosidad holandesa en una isla española",
+    "intro": "De una furgoneta en Figueretes a una mesa en la cala — la historia de una familia que se enamoró de Ibiza, aprendió sus cocinas y se quedó.",
+    "chapters": {
+      "1985": {
+        "year": "1985",
+        "title": "Una furgoneta, un perro, una idea",
+        "body": "Tom y Maria Zandwijk llegan a Figueretes con una Volkswagen, un labrador negro llamado Otto y la convicción de que la comida puede ser holandesa en disciplina y española en alma."
+      },
+      "2005": {
+        "year": "2005",
+        "title": "On the Beach",
+        "body": "Tras dos décadas de cocinas estacionales por toda la isla, la familia abre On the Beach en Cala San Vicente — la primera mesa donde la carta era tan pequeña como la propia cala."
+      },
+      "2016": {
+        "year": "2016",
+        "title": "The Boat House",
+        "body": "Una caseta de barcos reformada en la misma playa, equipo más grande, la misma idea: compartir comida con la gente que quieres mientras el mar marca el ritmo del día."
+      },
+      "2025": {
+        "year": "2025",
+        "title": "La finca de la cala",
+        "body": "Nuestra finca km 0 abre detrás de las dunas — tomates, hierbas, hojas y flores comestibles caminan a la cocina la misma mañana."
+      }
+    },
+    "chefLabel": "Chef de cocina",
+    "chefName": "Lieke Zandwijk",
+    "chefBio": "Formada en Amsterdam, Madrid y Bangkok, Lieke dirige la cocina con su hermano Sven en pase. Su comida se lee como una postal: una paella que mira a Valencia pero habla mediterráneo ibicenco, un curry que viaja desde Bangkok hasta la cala."
+  },
+  "gallery": {
+    "eyebrow": "La galería",
+    "headline": "Cuarenta temporadas en color",
+    "intro": "Platos, caras, cielo, sal. Un archivo libre de la cala y la mesa — actualizado cada primavera."
+  },
+  "contact": {
+    "eyebrow": "Contacto",
+    "headline": "Encuéntranos, escríbenos, fondea",
+    "intro": "Respondemos por email en el día. Para reservas del mismo día, llámanos directamente — la línea está abierta desde las 11:00.",
+    "form": {
+      "nameLabel": "Tu nombre",
+      "emailLabel": "Email",
+      "dateLabel": "Fecha",
+      "guestsLabel": "Comensales",
+      "messageLabel": "¿Algo que debamos saber?",
+      "submit": "Enviar solicitud"
+    },
+    "addressLabel": "Dirección",
+    "phoneLabel": "Teléfono",
+    "emailLabel": "Email",
+    "hoursLabel": "Horario",
+    "directionsLabel": "Desde Eivissa ciudad"
+  },
+  "footer": {
+    "tagline": "Una mesa familiar junto al mar — Cala San Vicente, desde 2016.",
+    "navigateLabel": "Navegar",
+    "findUsLabel": "Encuéntranos",
+    "languagesLabel": "Idioma",
+    "hoursLabel": "Horario",
+    "hoursValue": "Diario 12:30 – 23:00 · Cerrado en noviembre",
+    "rights": "Todos los derechos reservados.",
+    "craftedIn": "Hecho en"
+  },
   "scaffold": {
     "stepLabel": "Paso 2 — Scaffold del proyecto",
     "probeLabel": "Sonda de ScrollTrigger — aparece al 75% del viewport"

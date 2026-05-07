@@ -107,8 +107,9 @@ function Ray({ cfg }: { cfg: RayConfig }) {
     const fadeOut = MathUtils.smoothstep(a5, 0.0, 0.005);
     const fade = fadeIn * (1 - fadeOut);
     if (matRef.current) {
-      matRef.current.uniforms.uTime.value = t;
-      matRef.current.uniforms.uIntensity.value = fade;
+      const u = matRef.current.uniforms;
+      if (u.uTime) u.uTime.value = t;
+      if (u.uIntensity) u.uIntensity.value = fade;
     }
     if (groupRef.current) {
       // Lateral oscillation per ray, asynchronous (phase-offset).

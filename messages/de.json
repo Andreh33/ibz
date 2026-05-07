@@ -16,9 +16,21 @@
     "headline": "40",
     "subtitle": "niederländisches Familienabenteuer auf einer spanischen Insel",
     "timeline": {
-      "t1985": { "year": "1985", "place": "Figueretes", "label": "Ein Lieferwagen und ein Hund" },
-      "t2005": { "year": "2005", "place": "Cala San Vicente", "label": "On the Beach" },
-      "t2016": { "year": "2016", "place": "Cala San Vicente", "label": "The Boat House" }
+      "t1985": {
+        "year": "1985",
+        "place": "Figueretes",
+        "label": "Ein Lieferwagen und ein Hund"
+      },
+      "t2005": {
+        "year": "2005",
+        "place": "Cala San Vicente",
+        "label": "On the Beach"
+      },
+      "t2016": {
+        "year": "2016",
+        "place": "Cala San Vicente",
+        "label": "The Boat House"
+      }
     },
     "quote": {
       "body": "Mit den Liebsten essen und die Zeit am Strand und Meer genießen — das ist unsere Vorstellung vom Paradies.",
@@ -46,6 +58,103 @@
     "eyebrow": "Aus unserer Küche",
     "headline": "Modern, biologisch, hyperlokal",
     "intro": "Fünf Signature-Gerichte vom Mittelmeer und darüber hinaus, zubereitet mit Produkten unseres Null-Kilometer-Hofs und vertrauenswürdiger Partner in Spanien und Italien."
+  },
+  "act6": {
+    "eyebrow": "On the water",
+    "headline": "Anchor your boat — we deliver to the cove",
+    "body": "Captains, sail in. Drop anchor at Cala San Vicente, message us with your VHF or WhatsApp, and our skiff brings the table to you. Lunch, drinks, paella for the whole crew — served on deck or in the sand.",
+    "ctaCatering": "Reserve catering",
+    "ctaTable": "Reserve a table"
+  },
+  "act7": {
+    "eyebrow": "Where every story settles",
+    "headline": "We'll keep your table waiting",
+    "body": "Whether you arrive by car, by boat, or by long lazy walk along the cliffs — we'll be at the corner of the deck, watching the cove turn from turquoise to gold. Welcome home.",
+    "address": "Calle del Calo 12, Cala San Vicente, Eivissa",
+    "ctaReserve": "Reserve a table",
+    "ctaDirections": "Get directions"
+  },
+  "menu": {
+    "eyebrow": "The menu",
+    "headline": "Plates born of place",
+    "intro": "Six small editorial chapters — tapas, starters, mains, salads, desserts, drinks. Hyper-local where we can, sourced with intent everywhere else.",
+    "sections": {
+      "tapas": "Tapas",
+      "starters": "Starters",
+      "mains": "Mains",
+      "salads": "Salads",
+      "desserts": "Desserts",
+      "drinks": "Drinks"
+    },
+    "callout": {
+      "label": "Reserve",
+      "title": "Tables fill fast in season",
+      "body": "We accept reservations from 12:30 to 23:00. For groups over six, please contact us directly so we can prepare the right corner of the deck.",
+      "cta": "Reserve a table"
+    }
+  },
+  "about": {
+    "eyebrow": "The Zandwijk family",
+    "headline": "Forty years of Dutch curiosity on a Spanish island",
+    "intro": "From a single van in Figueretes to a beachfront table at the cove — the story of a family that fell in love with Ibiza, learned its kitchens, and stayed.",
+    "chapters": {
+      "1985": {
+        "year": "1985",
+        "title": "A van, a dog, an idea",
+        "body": "Tom and Maria Zandwijk arrive in Figueretes with a Volkswagen Bus, a black Labrador called Otto, and the conviction that food can be both Dutch in discipline and Spanish in soul."
+      },
+      "2005": {
+        "year": "2005",
+        "title": "On the Beach",
+        "body": "After two decades of seasonal kitchens across the island, the family opens On the Beach in Cala San Vicente — the first table where the menu was as small as the cove itself."
+      },
+      "2016": {
+        "year": "2016",
+        "title": "The Boat House",
+        "body": "A renovated boathouse on the same beach, larger crew, the same idea: share food with people you love while the sea decides the time of day."
+      },
+      "2025": {
+        "year": "2025",
+        "title": "The cove farm",
+        "body": "Our zero-km farm opens behind the dunes — tomatoes, herbs, leaves and edible flowers walk to the kitchen the same morning."
+      }
+    },
+    "chefLabel": "Chef de cuisine",
+    "chefName": "Lieke Zandwijk",
+    "chefBio": "Trained in Amsterdam, Madrid and Bangkok, Lieke runs the kitchen with her brother Sven on the pass. Her food reads like a postcard: a paella that nods to Valencia but speaks Mediterranean Ibiza, a curry that travels from Bangkok back to the cove."
+  },
+  "gallery": {
+    "eyebrow": "The gallery",
+    "headline": "Forty seasons in colour",
+    "intro": "Plates, faces, sky, salt. A loose archive of the cove and the table — updated every spring."
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "headline": "Find us, write us, drop anchor",
+    "intro": "We answer email within the day. For same-day reservations, please call directly — the line is open from 11:00.",
+    "form": {
+      "nameLabel": "Your name",
+      "emailLabel": "Email",
+      "dateLabel": "Date",
+      "guestsLabel": "Guests",
+      "messageLabel": "Anything we should know?",
+      "submit": "Send request"
+    },
+    "addressLabel": "Address",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "hoursLabel": "Hours",
+    "directionsLabel": "Driving from Ibiza Town"
+  },
+  "footer": {
+    "tagline": "A family table by the sea — Cala San Vicente, since 2016.",
+    "navigateLabel": "Navigate",
+    "findUsLabel": "Find us",
+    "languagesLabel": "Language",
+    "hoursLabel": "Hours",
+    "hoursValue": "Daily 12:30 – 23:00 · Closed November",
+    "rights": "All rights reserved.",
+    "craftedIn": "Crafted in"
   },
   "scaffold": {
     "stepLabel": "Schritt 2 — Projekt-Scaffold",
